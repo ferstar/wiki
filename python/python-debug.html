@@ -1,24 +1,45 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <title>Python Debug - Welcome to ferstar's personal wiki site</title>
         <meta name="keywords" content="wiki, linux, python"/>
         <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
     </head>
 
     <body>
-        <div id="container">
+        <div id="container" class="typo">
             
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#python">python</a>&nbsp;»&nbsp;Python Debug</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">Python Debug</div>
-  <div id="content">
-  <h2 id="pdb-the-python-debug">PDB (The Python Debug)</h2>
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#python">python</a> » Python Debug
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="pdb-the-python-debug">PDB (The Python Debug)</h2>
 <p>Python自带的调试器, 常用的几种调用方法:</p>
 <p>命令行调用模块:</p>
 <div class="hlcode"><pre><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pdb</span> <span class="n">myscript</span><span class="p">.</span><span class="n">py</span>
@@ -82,15 +103,16 @@
 <p>这两个都是非常强大好用的调试工具.</p>
 <p><a href="https://pypi.python.org/pypi/pudb"><code>pudb</code></a> 风格上类似vi, 多窗口操作, 方便一边看代码, 一遍调试, 还可以执行调用相关的交互解释器, 这些都可以通过<code>Ctrl-P</code>配置. UI上感觉像当年用过的Turbo C.</p>
 <p><a href="https://pypi.python.org/pypi/ipdb"><code>ipdb</code></a>更像是<code>pdb</code>的加强版, ipython和pdb的结合体, 可以直接取代pdb来使用.</p>
-</div>
+    </div>
 
         </div>
         <div id="footer">
-            <span>
-                Copyright © 2016 ferstar.
+              <p>
+                Copyright © 2012-2016 ferstar.
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-01-23 23:06:08</p>
         </div>
-        
     </body>
 </html>

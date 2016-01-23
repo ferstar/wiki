@@ -1,24 +1,45 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <title>daemontools - Welcome to ferstar's personal wiki site</title>
         <meta name="keywords" content="wiki, linux, python"/>
         <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
     </head>
 
     <body>
-        <div id="container">
+        <div id="container" class="typo">
             
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#tool">tool</a>&nbsp;»&nbsp;daemontools</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">daemontools</div>
-  <div id="content">
-  <p>daemontools is a collection of tools for managing UNIX services.</p>
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » daemontools
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>daemontools is a collection of tools for managing UNIX services.</p>
 <p>它用于监控服务的运行状态, 如果服务退出, 则会自动重启服务, 以保证服务的正常运行.</p>
 <h2 id="_1">使用</h2>
 <h3 id="gentoo">Gentoo</h3>
@@ -64,15 +85,16 @@
 <li><a href="http://idaemon.net/post-797.html">使用daemontools确保指定进程的运行</a></li>
 <li><a href="http://blog.teksol.info/pages/daemontools/tutorial">Daemontools: Tutorial</a></li>
 </ul>
-</div>
+    </div>
 
         </div>
         <div id="footer">
-            <span>
-                Copyright © 2016 ferstar.
+              <p>
+                Copyright © 2012-2016 ferstar.
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-01-23 23:06:08</p>
         </div>
-        
     </body>
 </html>

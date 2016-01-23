@@ -1,24 +1,45 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <title>bwm-ng - Welcome to ferstar's personal wiki site</title>
         <meta name="keywords" content="wiki, linux, python"/>
         <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
     </head>
 
     <body>
-        <div id="container">
+        <div id="container" class="typo">
             
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#tool">tool</a>&nbsp;»&nbsp;bwm-ng</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">bwm-ng</div>
-  <div id="content">
-  <p>Bandwidth Monitor NG (Next Generation), a live bandwidth monitor for network and disk io.</p>
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » bwm-ng
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>Bandwidth Monitor NG (Next Generation), a live bandwidth monitor for network and disk io.</p>
 <p>一个用于实时监控网络流量和硬盘io的软件, 在流量监控方面感觉比 <code>iftop</code> 更简单一些</p>
 <p>gentoo下直接安装<code>net-analyzer/bwm-ng</code>就行了</p>
 <p>在man手册里看到, 输出显示的格式可以是 curses, curses2, plain, csv, html 等格式<br />
@@ -31,15 +52,16 @@
 <p>查看硬盘io数据:</p>
 <div class="hlcode"><pre><span class="n">bwm</span><span class="o">-</span><span class="n">ng</span> <span class="o">-</span><span class="n">i</span> <span class="n">disk</span>
 </pre></div>
-</div>
+    </div>
 
         </div>
         <div id="footer">
-            <span>
-                Copyright © 2016 ferstar.
+              <p>
+                Copyright © 2012-2016 ferstar.
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-01-23 23:06:08</p>
         </div>
-        
     </body>
 </html>

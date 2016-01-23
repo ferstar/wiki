@@ -1,24 +1,45 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <title>效率工具 - Welcome to ferstar's personal wiki site</title>
         <meta name="keywords" content="wiki, linux, python"/>
         <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
     </head>
 
     <body>
-        <div id="container">
+        <div id="container" class="typo">
             
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#other">other</a>&nbsp;»&nbsp;效率工具</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">效率工具</div>
-  <div id="content">
-  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#other">other</a> » 效率工具
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#_1">终端管理</a><ul>
 <li><a href="#xshell-xftp">Xshell / Xftp</a></li>
 <li><a href="#winscp-putty">WinSCP / PuTTY组合</a></li>
@@ -110,20 +131,20 @@
 <h3 id="_4">作业部落</h3>
 <h2 id="_5">云笔记</h2>
 <h3 id="_6">为知笔记</h3>
-<p>最初弃用印象笔记的原因主要是不支持<code>Markdown</code>语法而为知笔记支持，习惯后发现已经离不开他了。</p>
-<p>官网链接：<a href="http://www.wiz.cn/">http://www.wiz.cn/</a> </p>
+<p>&emsp;&emsp;最初弃用印象笔记的原因主要是不支持<code>Markdown</code>语法而为知笔记支持，习惯后发现已经离不开他了。</p>
+<p>&emsp;&emsp;官网链接：<a href="http://www.wiz.cn/">http://www.wiz.cn/</a> </p>
 <h2 id="_7">思维导图</h2>
 <h3 id="_8">百度脑图</h3>
-<p>类似有<code>XMind</code>, <code>MindManager</code>，<code>FreeMind</code>等等。</p>
-<p>百度脑图相对而言比较简洁和轻量级，而且功能也都非常不错。有时候帮助自己规划一些事情，非常合适。</p>
+<p>&emsp;&emsp;类似有<code>XMind</code>, <code>MindManager</code>，<code>FreeMind</code>等等。
+百度脑图相对而言比较简洁和轻量级，而且功能也都非常不错。有时候帮助自己规划一些事情，非常合适。</p>
 <h2 id="_9">梯子</h2>
 <h3 id="shadowsocks">Shadowsocks</h3>
-<p>爬墙必备，跨平台</p>
+<p>&emsp;&emsp;爬墙必备，跨平台</p>
 <h2 id="_10">屏幕色温</h2>
 <h3 id="flux">眼睛福利 f.lux</h3>
-<p>这软件会自动在夜间将显示器色温调至偏黄色，似乎对眼睛有点好处。</p>
-<p>主页地址：<a href="https://justgetflux.com/">https://justgetflux.com/</a> </p>
-<p><code>Ubuntu</code>安装方法：</p>
+<p>&emsp;&emsp;这软件会自动在夜间将显示器色温调至偏黄色，似乎对眼睛有点好处。</p>
+<p>&emsp;&emsp;主页地址：<a href="https://justgetflux.com/">https://justgetflux.com/</a> </p>
+<p>&emsp;&emsp;<code>Ubuntu</code>安装方法：</p>
 <div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">glade2</span> <span class="n">python</span><span class="o">-</span><span class="n">appindicator</span>
 <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/Kilian/f.lux-indicator-applet.git</span>
 <span class="n">cd</span> <span class="n">f</span><span class="p">.</span><span class="n">lux</span><span class="o">-</span><span class="n">indicator</span><span class="o">-</span><span class="n">applet</span>
@@ -163,15 +184,16 @@
 <h3 id="im">瀑布IM</h3>
 <h2 id="_27">键鼠共享</h2>
 <h3 id="synergy">Synergy</h3>
-</div>
+    </div>
 
         </div>
         <div id="footer">
-            <span>
-                Copyright © 2016 ferstar.
+              <p>
+                Copyright © 2012-2016 ferstar.
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-01-23 23:06:08</p>
         </div>
-        
     </body>
 </html>

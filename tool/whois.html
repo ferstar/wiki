@@ -1,24 +1,45 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <title>whois - Welcome to ferstar's personal wiki site</title>
         <meta name="keywords" content="wiki, linux, python"/>
         <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
     </head>
 
     <body>
-        <div id="container">
+        <div id="container" class="typo">
             
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#tool">tool</a>&nbsp;»&nbsp;whois</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">whois</div>
-  <div id="content">
-  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » whois
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#_1">简介</a></li>
 <li><a href="#_2">术语</a></li>
 <li><a href="#_3">使用</a></li>
@@ -98,15 +119,16 @@
 
 <p>这里先查询whois.verisign-grs.com这个whois server. verisign是一个registry operator, 负责操作.com和.net的注册. 在本地使用的whois实现里, 维护了一个tld_serv_list列表, 对每个顶级域首先使用相应的whois server来查询, 获取代理的whois server, 再在这个whois server中查询获取更详细的信息. 如上所示, 进而查询的whois server是whois.enom.com.</p>
 <p>另外, 有些域名直接查询registry opeartor(nic) 即可获取详细信息, 如.me</p>
-</div>
+    </div>
 
         </div>
         <div id="footer">
-            <span>
-                Copyright © 2016 ferstar.
+              <p>
+                Copyright © 2012-2016 ferstar.
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-01-23 23:06:08</p>
         </div>
-        
     </body>
 </html>
