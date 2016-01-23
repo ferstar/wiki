@@ -1,7 +1,7 @@
 # Document:
 # http://simiki.org/docs/configuration.html
 
-url: http://wiki.ferstar.org
+url: http://wiki.ferstar.org/
 title: Welcome to ferstar's personal wiki site
 keywords: wiki, linux, python
 description: "ferstar's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."
