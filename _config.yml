@@ -10,5 +10,6 @@ author: ferstar
 ##### Deploy #####
 deploy:
   - type: git
+    destination: output
     remote: origin
     branch: gh-pages
