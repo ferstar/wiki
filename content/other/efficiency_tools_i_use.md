@@ -32,33 +32,32 @@ updated: 2016-01-23 21:33:05
 
 ### 为知笔记
 
-最初弃用印象笔记的原因主要是不支持`Markdown`语法而为知笔记支持，习惯后发现已经离不开他了。
+&emsp;&emsp;最初弃用印象笔记的原因主要是不支持`Markdown`语法而为知笔记支持，习惯后发现已经离不开他了。
 
-官网链接：[http://www.wiz.cn/](http://www.wiz.cn/) 
+&emsp;&emsp;官网链接：[http://www.wiz.cn/](http://www.wiz.cn/) 
 
 ## 思维导图
 
 ### 百度脑图
 
-类似有`XMind`, `MindManager`，`FreeMind`等等。
-
+&emsp;&emsp;类似有`XMind`, `MindManager`，`FreeMind`等等。
 百度脑图相对而言比较简洁和轻量级，而且功能也都非常不错。有时候帮助自己规划一些事情，非常合适。
 
 ## 梯子
 
 ### Shadowsocks
 
-爬墙必备，跨平台
+&emsp;&emsp;爬墙必备，跨平台
 
 ## 屏幕色温
 
 ### 眼睛福利 f.lux
 
-这软件会自动在夜间将显示器色温调至偏黄色，似乎对眼睛有点好处。
+&emsp;&emsp;这软件会自动在夜间将显示器色温调至偏黄色，似乎对眼睛有点好处。
 
-主页地址：[https://justgetflux.com/](https://justgetflux.com/) 
+&emsp;&emsp;主页地址：[https://justgetflux.com/](https://justgetflux.com/) 
 
-`Ubuntu`安装方法：
+&emsp;&emsp;`Ubuntu`安装方法：
 
 ```shell
 sudo apt-get install python-glade2 python-appindicator
