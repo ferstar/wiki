@@ -67,6 +67,11 @@ def deploy_rsync(deploy_configs):
 
 def deploy_git(deploy_configs):
     '''for pages service of such as github/gitcafe ...'''
+    with settings(warn_only=True):
+        res = local('which -s ghp-import; echo $?', capture=True)
+        if int(res.strip()):
+            do_exit('Warning: ghp-import not installed! '
+                    'run: `pip install ghp-import`')
     output_dir = configs['destination']
     remote = deploy_configs.get('remote', 'origin')
     branch = deploy_configs.get('branch', 'gh-pages')
@@ -111,13 +116,10 @@ def deploy_ftp(deploy_configs):
 @task
 def deploy(type=None):
     '''deploy your site, support rsync / ftp / github pages
-
     run deploy:
         $ fab deploy
-
     run deploy with specific type(not supported specify multiple types):
         $ fab deploy:type=rsync
-
     '''
     if 'deploy' not in configs or not isinstance(configs['deploy'], list):
         do_exit('Warning: deploy not set right in _config.yml')
@@ -164,4 +166,3 @@ def commit():
         res = local('git status --porcelain 2>/dev/null | grep "^M" | wc -l',
                     capture=True)
         if int(res.strip()):
-            local("git commit -m '{0}'".format(message))
