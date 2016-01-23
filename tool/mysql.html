@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>mysql - wiki</title>
+        <meta name="keywords" content="wiki, linux, python"/>
+        <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#tool">tool</a>&nbsp;»&nbsp;mysql</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">mysql</div>
+  <div id="content">
+  <h2 id="_1">查看单个数据库或表的大小</h2>
+<p>要想知道每个数据库的大小的话，步骤如下：</p>
+<p>1、进入<code>information_schema</code> 数据库（存放了其他的数据库的信息）</p>
+<div class="hlcode"><pre><span class="n">use</span> <span class="n">information_schema</span><span class="p">;</span>
+</pre></div>
+
+
+<p>2、查询所有数据的大小：</p>
+<div class="hlcode"><pre><span class="n">select</span> <span class="n">concat</span><span class="p">(</span><span class="n">round</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">data_length</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">),</span><span class="mi">2</span><span class="p">),</span><span class="err">&#39;</span><span class="n">MB</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">as</span> <span class="n">data</span> <span class="n">from</span> <span class="n">tables</span><span class="p">;</span>
+</pre></div>
+
+
+<p>3、查看指定数据库的大小：</p>
+<p>比如查看数据库home的大小</p>
+<div class="hlcode"><pre><span class="n">select</span> <span class="n">concat</span><span class="p">(</span><span class="n">round</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">data_length</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">),</span><span class="mi">2</span><span class="p">),</span><span class="err">&#39;</span><span class="n">MB</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">as</span> <span class="n">data</span> <span class="n">from</span> <span class="n">tables</span> <span class="n">where</span> <span class="n">table_schema</span><span class="o">=</span><span class="err">&#39;</span><span class="n">home</span><span class="err">&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>4、查看指定数据库的某个表的大小</p>
+<p>比如查看数据库home中 members 表的大小</p>
+<div class="hlcode"><pre><span class="n">select</span> <span class="n">concat</span><span class="p">(</span><span class="n">round</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">data_length</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">),</span><span class="mi">2</span><span class="p">),</span><span class="err">&#39;</span><span class="n">MB</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">as</span> <span class="n">data</span> <span class="n">from</span> <span class="n">tables</span> <span class="n">where</span> <span class="n">table_schema</span><span class="o">=</span><span class="err">&#39;</span><span class="n">home</span><span class="err">&#39;</span> <span class="n">and</span> <span class="n">table_name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">members</span><span class="err">&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>(转载至网上)</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 ferstar.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
