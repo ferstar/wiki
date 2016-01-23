@@ -1,0 +1,14 @@
+# Document:
+# http://simiki.org/docs/configuration.html
+
+url: http://wiki.ferstar.org
+title: wiki
+keywords: wiki, linux, python
+description: "ferstar's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."
+author: ferstar
+
+##### Deploy #####
+deploy:
+  - type: git
+    remote: origin
+    branch: gh-pages
