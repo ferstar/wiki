@@ -1,25 +1,17 @@
 ---
 title: "效率工具"
 date: 2013-08-17 07:32
+updated: 2016-01-23 21:33:05
 ---
 
 
 ## 云笔记本 ##
 
-### EverNote ###
+### 为知笔记 ###
 
-类似的还有`OneNote`, `有道笔记`, `麦库笔记`等等. 一直觉得还是EverNote好用!  
-各种功能都比较人性化, 且他们还有一些非常棒的插件, 包括`悦读`, `剪切`等等.  
-现在用的是`印象笔记`, 国内的EverNote.  
+最初弃用印象笔记的原因主要是不支持`Markdown`语法而为知笔记支持，习惯后发现已经离不开他了。
 
-
-## TODO工具 ##
-
-### t ###
-
-一个命令行下的todo工具. 来源于 [t](https://github.com/sjl/t) , 我自己也写了一个, 有些功能直接引用了他的代码.  
-现在增加了日期显示, 以及按日期排序的功能.  
-具体可以去 [我的github](https://github.com/tankywoo/t) 上看, 我现在用的就是我自己写的, 感觉非常不错.  
+官网链接：[http://www.wiz.cn/](http://www.wiz.cn/) 
 
 
 ## 思维导图 ##
@@ -68,3 +60,21 @@ note: 以下链接用base64转码
 * [红杏](aHR0cDovL2hvbnguaW4vaS9WVEpHLVlrV0doakMydURtCg==) 只能邀请注册, 所以url带尾巴. 只支持Chrome浏览器, 以插件形式使用. (未使用)
 * [Shadowsocks](aHR0cHM6Ly9zaGFkb3dzb2Nrcy5jb20vCg==) 用的shadowsocks. (未使用)
 * [熊猫翻滚](aHR0cHM6Ly93d3cucGFuZGFmYW4ub3JnLz9yPTIyNjAxCg==) 带尾巴. http(s)代理. (未使用)
+
+## 眼睛福利 f.lux
+
+这软件会自动在夜间将显示器色温调至偏黄色，似乎对眼睛有点好处。
+
+主页地址：[https://justgetflux.com/](https://justgetflux.com/) 
+
+`Ubuntu`安装方法：
+
+```shell
+sudo apt-get install python-glade2 python-appindicator
+git clone https://github.com/Kilian/f.lux-indicator-applet.git
+cd f.lux-indicator-applet
+chmod +x setup.py
+sudo ./setup.py install
+sudo chmod +x /usr/local/bin/xflux
+fluxgui
+```
