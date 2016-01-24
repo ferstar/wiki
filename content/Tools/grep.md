@@ -1,7 +1,7 @@
 ---
 title: "grep"
 date: 2013-08-17 07:32
-description: "Global Regular Expression Print"
+description: "-->Global Regular Expression Print"
 ---
 
 > 格式:

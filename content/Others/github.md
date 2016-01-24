@@ -1,8 +1,39 @@
 ---
 title: "Github"
 date: 2016-01-24 16:56
-description: "全球最大的同性交友网站"
+description: "-->全球最大的同性交友网站"
 ---
+
+[TOC]
+
+## git status --porcelain
+
+[L163](https://github.com/tankywoo/simiki/blob/master/simiki/conf_templates/fabfile.py#L163)这里会漏掉两种情况：
+```
+# 1. 有文件被删除 git status --porcelain命令结果前两位字符应该是
+空格+D
+# 2. 新添加的文件没有被追踪 git status --porcelain 输出前两位字符是
+??
+# 3. 有文件被修改
+空格+M
+```
+所以需要稍微修改下正则，匹配到前两种情况
+`res = local('git status --porcelain 2>/dev/null | egrep \'^ [DM]|^\?\?\' | wc -l', capture=True)`
+
+然后检测到有改动执行`git add -A`后
+[L169](https://github.com/tankywoo/simiki/blob/master/simiki/conf_templates/fabfile.py#L169)这里会漏掉三种情况
+```
+# 1. 文件被重命名
+R+空格
+# 2. 文件被删除
+D+空格
+# 3. 有新文件
+A+空格
+# 4. 文件被修改
+M+空格
+```
+所以需要修改下正则，匹配到前三种情况
+`res = local('git status --porcelain 2>/dev/null | egrep \'^[ADMR]\' | wc -l', capture=True)`
 
 ## PR流程
 
