@@ -170,3 +170,10 @@ def c():
                     capture=True)
         if int(res.strip()):
             local("git commit -m '{0}'".format(message))
+
+
+@task
+def cd():
+   '''commit and push changes'''
+   c()
+   d()
