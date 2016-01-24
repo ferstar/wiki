@@ -1,9 +1,10 @@
 ---
 title: "grep"
 date: 2013-08-17 07:32
+description: ""
 ---
 
-格式:
+> 格式:
 
 	grep [OPTIONS] PATTERN [FILE...]
 
@@ -14,7 +15,7 @@ date: 2013-08-17 07:32
 	egrep == grep -E
 	fgrep == grep -F
 
-## 参数 ##
+## 参数
 
 ` -e `
 This can be used to specify multiple search patterns
@@ -55,7 +56,7 @@ print the match line number
 	grep -r --include *.markdown 'tankywoo-wiki' source/_posts
 
 
-## Examples ##
+## 样例
 
 	# The test.file is :
 	root@gentoo-jl tmp # cat -n test.file
@@ -88,3 +89,10 @@ print the match line number
 	root@gentoo-jl tmp # grep -in -x 'say hello' test.file
 	5:say hello
 
+## 参考链接
+
+[三分钟教你轻松掌握 grep 命令中的正则表达式](http://www.linuxstory.org/grep-regular-expressions/) 
+
+[正则表达式和 sed](http://wiki.jikexueyuan.com/project/unix/regular-expressions.html) 
+
+[Linux 基础 —— grep 和正则表达式](http://liaoph.com/linux-basic-grep/) 
