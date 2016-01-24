@@ -2,9 +2,9 @@
 # http://simiki.org/docs/configuration.html
 
 url: http://wiki.ferstar.org/
-title: Welcome to ferstar's personal wiki site
+title: My Personal Wiki Site
 keywords: wiki, linux, python
-description: "ferstar's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."
+description: "ferstar's personal wiki, powered by vim and markdown. Focus on Python, Linux, Ops-Dev etc."
 author: ferstar
 theme: yasimple
 
