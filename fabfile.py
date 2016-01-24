@@ -77,8 +77,11 @@ def deploy_git(deploy_configs):
     branch = deploy_configs.get('branch', 'gh-pages')
     # commit gh-pages branch and push to remote
     _mesg = 'Update output documentation'
+    local('cd %s' % output_dir)
+    local('git add .', capture=False)
+    local('cd ..')
     local('ghp-import -p -m "{0}" -r {1} -b {2} {3}' \
-          .format(_mesg, remote, branch, output_dir))
+          .format(_mesg, remote, branch, output_dir), capture=False)
 
 
 def deploy_ftp(deploy_configs):
