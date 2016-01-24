@@ -156,7 +156,7 @@ def deploy(type=None):
 def commit():
     '''git commit source changes from all tracked/untracked files'''
     message = 'Update Documentation'
-    commit_file = '.'  # include tracked and untracked files
+    commit_file = '--all'  # include tracked and untracked files
 
     with settings(warn_only=True):
         # Changes not staged for commit
