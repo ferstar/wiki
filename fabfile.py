@@ -114,7 +114,7 @@ def deploy_ftp(deploy_configs):
 
 
 @task
-def d(type=None):
+def deploy(type=None):
     '''deploy your site, support rsync / ftp / github pages
 
     run deploy:
@@ -153,7 +153,7 @@ def d(type=None):
 
 
 @task
-def c():
+def commit():
     '''git commit source changes from all tracked/untracked files'''
     message = 'Update Documentation'
     commit_file = '-A'  # include tracked and untracked files
@@ -175,5 +175,6 @@ def c():
 @task
 def cd():
    '''commit and push changes'''
-   c()
-   d()
+   local('simiki g', capture=False)
+   commit()
+   deploy()
