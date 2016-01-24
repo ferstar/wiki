@@ -79,7 +79,7 @@ def deploy_git(deploy_configs):
     _mesg = 'Update output documentation'
     local('ghp-import -p -m "{0}" -r {1} -b {2} {3}' \
           .format(_mesg, remote, branch, output_dir))
-
+    local('git push')
 
 def deploy_ftp(deploy_configs):
     '''for ftp'''
