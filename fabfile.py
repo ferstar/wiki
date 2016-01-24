@@ -114,7 +114,7 @@ def deploy_ftp(deploy_configs):
 
 
 @task
-def deploy(type=None):
+def d(type=None):
     '''deploy your site, support rsync / ftp / github pages
 
     run deploy:
@@ -153,7 +153,7 @@ def deploy(type=None):
 
 
 @task
-def commit():
+def c():
     '''git commit source changes from all tracked/untracked files'''
     message = 'Update Documentation'
     commit_file = '-A'  # include tracked and untracked files
