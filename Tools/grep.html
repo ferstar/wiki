@@ -39,7 +39,9 @@
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <p>格式:</p>
+        <blockquote>
+<p>格式:</p>
+</blockquote>
 <div class="hlcode"><pre><span class="n">grep</span> <span class="p">[</span><span class="n">OPTIONS</span><span class="p">]</span> <span class="n">PATTERN</span> <span class="p">[</span><span class="kt">FILE</span><span class="p">...]</span>
 
 <span class="n">grep</span> <span class="p">[</span><span class="n">OPTIONS</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">PATTERN</span> <span class="o">|</span> <span class="o">-</span><span class="n">f</span> <span class="kt">FILE</span><span class="p">]</span> <span class="p">[</span><span class="kt">FILE</span><span class="p">...]</span>
@@ -83,7 +85,7 @@ print the match line number</p>
 </pre></div>
 
 
-<h2 id="examples">Examples</h2>
+<h2 id="_2">样例</h2>
 <div class="hlcode"><pre><span class="cp"># The test.file is :</span>
 <span class="n">root</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">jl</span> <span class="n">tmp</span> <span class="err">#</span> <span class="n">cat</span> <span class="o">-</span><span class="n">n</span> <span class="n">test</span><span class="p">.</span><span class="n">file</span>
      <span class="mi">1</span>  <span class="n">TankyWoo</span>
@@ -115,6 +117,12 @@ print the match line number</p>
 <span class="n">root</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">jl</span> <span class="n">tmp</span> <span class="err">#</span> <span class="n">grep</span> <span class="o">-</span><span class="n">in</span> <span class="o">-</span><span class="n">x</span> <span class="err">&#39;</span><span class="n">say</span> <span class="n">hello</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">file</span>
 <span class="mi">5</span><span class="o">:</span><span class="n">say</span> <span class="n">hello</span>
 </pre></div>
+
+
+<h2 id="_3">参考链接</h2>
+<p><a href="http://www.linuxstory.org/grep-regular-expressions/">三分钟教你轻松掌握 grep 命令中的正则表达式</a> </p>
+<p><a href="http://wiki.jikexueyuan.com/project/unix/regular-expressions.html">正则表达式和 sed</a> </p>
+<p><a href="http://liaoph.com/linux-basic-grep/">Linux 基础 —— grep 和正则表达式</a> </p>
     </div>
 
         </div>
