@@ -76,12 +76,14 @@ def deploy_git(deploy_configs):
     remote = deploy_configs.get('remote', 'origin')
     branch = deploy_configs.get('branch', 'gh-pages')
     # commit gh-pages branch and push to remote
-    _mesg = 'Update output documentation'
+    _mesg = 'Auto Update Site By Fabric'
     local('cd %s' % output_dir)
     local('git add .', capture=False)
+    local('git commit -m "{0}"'.format(_mesg), capture=False)
+    local('git push')
     local('cd ..')
-    local('ghp-import -p -m "{0}" -r {1} -b {2} {3}' \
-          .format(_mesg, remote, branch, output_dir), capture=False)
+    #local('ghp-import -p -m "{0}" -r {1} -b {2} {3}' \
+    #      .format(_mesg, remote, branch, output_dir), capture=False)
 
 
 def deploy_ftp(deploy_configs):
