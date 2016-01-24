@@ -68,12 +68,12 @@
 <p>supervisorctl -- control applications run by supervisord from the cmd line.</p>
 </blockquote>
 <p>直接运行程序进入交互式命令行模式，调试服务非常方便(实际运行中两条命令间并没有空行, 此为查看方便):</p>
-<div class="hlcode"><pre><span class="err">#</span> <span class="err">进入交互式模式</span><span class="p">,</span> <span class="err">会提示当前管理的服务状态</span>
+<div class="hlcode"><pre><span class="err">#</span> <span class="nx">进入交互式模式</span><span class="p">,</span> <span class="nx">会提示当前管理的服务状态</span>
 <span class="err">$</span> <span class="nx">supervisorctl</span>
 <span class="nx">captcha2022</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">18356</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">17</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">16</span>
 <span class="nx">captcha2023</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">13961</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">17</span><span class="p">:</span><span class="mi">40</span>
 
-<span class="err">#</span> <span class="err">查看可用的命令</span>
+<span class="err">#</span> <span class="nx">查看可用的命令</span>
 <span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nx">help</span>
 
 <span class="nb">default</span> <span class="nx">commands</span> <span class="p">(</span><span class="k">type</span> <span class="nx">help</span> <span class="o">&lt;</span><span class="nx">topic</span><span class="o">&gt;</span><span class="p">):</span>
@@ -81,24 +81,24 @@
 <span class="nb">add</span>    <span class="nb">clear</span>  <span class="nx">fg</span>        <span class="nb">open</span>  <span class="nb">quit</span>    <span class="nb">remove</span>  <span class="nb">restart</span>   <span class="nb">start</span>   <span class="nb">stop</span>  <span class="nx">update</span>
 <span class="nx">avail</span>  <span class="nx">exit</span>   <span class="nx">maintail</span>  <span class="nb">pid</span>   <span class="nx">reload</span>  <span class="nx">reread</span>  <span class="nx">shutdown</span>  <span class="nb">status</span>  <span class="nx">tail</span>  <span class="nb">version</span>
 
-<span class="err">#</span> <span class="nx">help</span> <span class="o">&lt;</span><span class="nx">cmd</span><span class="o">&gt;</span> <span class="err">可以查看相关命令的用法</span>
+<span class="err">#</span> <span class="nx">help</span> <span class="o">&lt;</span><span class="nx">cmd</span><span class="o">&gt;</span> <span class="nx">可以查看相关命令的用法</span>
 <span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nx">help</span> <span class="nb">status</span>
 <span class="nb">status</span> <span class="o">&lt;</span><span class="nb">name</span><span class="o">&gt;</span>           <span class="nb">Get</span> <span class="nb">status</span> <span class="nb">for</span> <span class="nx">a</span> <span class="nx">single</span> <span class="nb">process</span>
 <span class="nb">status</span> <span class="o">&lt;</span><span class="nx">gname</span><span class="o">&gt;</span><span class="p">:</span><span class="o">*</span>        <span class="nb">Get</span> <span class="nb">status</span> <span class="nb">for</span> <span class="kc">all</span> <span class="n">processes</span> <span class="k">in</span> <span class="nx">a</span> <span class="k">group</span>
 <span class="nb">status</span> <span class="o">&lt;</span><span class="nb">name</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nb">name</span><span class="o">&gt;</span>    <span class="nb">Get</span> <span class="nb">status</span> <span class="nb">for</span> <span class="nb">multiple</span> <span class="nb">named</span> <span class="nx">processes</span>
 <span class="nb">status</span>                  <span class="nb">Get</span> <span class="kc">all</span> <span class="nb">process</span> <span class="nb">status</span> <span class="nx">info</span>
 
-<span class="err">#</span> <span class="nb">status</span> <span class="err">命令查看当前管理的服务状态</span><span class="p">,</span> <span class="err">确认服务是正常运行的</span><span class="nb">RUNNING</span><span class="err">状态</span>
+<span class="err">#</span> <span class="nb">status</span> <span class="nx">命令查看当前管理的服务状态</span><span class="p">,</span> <span class="nx">确认服务是正常运行的RUNNING状态</span>
 <span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nb">status</span>
 <span class="nx">captcha2022</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">18356</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">17</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">20</span>
 <span class="nx">captcha2023</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">13961</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">17</span><span class="p">:</span><span class="mi">44</span>
 
-<span class="err">#</span> <span class="err">修改配置后</span><span class="p">,</span> <span class="err">执行</span> <span class="nx">update</span> <span class="err">命令更新状态</span><span class="p">,</span> <span class="err">非常方便</span>
+<span class="err">#</span> <span class="nx">修改配置后</span><span class="p">,</span> <span class="nx">执行</span> <span class="nx">update</span> <span class="nx">命令更新状态</span><span class="p">,</span> <span class="nx">非常方便</span>
 <span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nx">update</span>
 <span class="nx">captcha2023</span><span class="p">:</span> <span class="nx">stopped</span>
 <span class="nx">captcha2023</span><span class="p">:</span> <span class="nx">updated</span> <span class="nb">process</span> <span class="k">group</span>
 
-<span class="err">#</span> <span class="nx">update</span><span class="err">后再次确认服务状态</span>
+<span class="err">#</span> <span class="nx">update后再次确认服务状态</span>
 <span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nb">status</span>
 <span class="nx">captcha2022</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">18356</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mi">03</span>
 <span class="nx">captcha2023</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">16872</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">03</span>
@@ -162,7 +162,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2016-01-24 09:26:47</p>
+                <p>Last Update 2016-01-24 10:24:46</p>
         </div>
     </body>
 </html>
