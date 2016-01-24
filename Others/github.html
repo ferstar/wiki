@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Github - My Personal Wiki Site</title>
+        <meta name="keywords" content="wiki, linux, python"/>
+        <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, Linux, Ops-Dev etc."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#Others">Others</a> » Github
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="pr">PR流程</h2>
+<blockquote>
+<p>私以为<code>Gihub</code>的精髓就是这个<code>Pull Request</code>，可以让大家一起愉快的搞基。一般<code>PR</code>流程如下：</p>
+</blockquote>
+<ol>
+<li>
+<p>查看项目主页有无关于<code>PR</code>的约束要求，有则按照约束做，无则下一步。</p>
+</li>
+<li>
+<p><code>fork</code>一份源码到自己的<code>Github</code>仓库。</p>
+</li>
+<li>
+<p>在<code>fork</code>到自己的仓库项目新建一个<code>branch</code>，这个分支的名字虽然可以由你指定，但约定俗成认为最好是以要修复的<code>bug</code>或增加的<code>function</code>命名，比如你修复了一个安卓内核无限重启的<code>bug</code>，那么新分支的名字就可以取<code>fix-boot-loops</code>。</p>
+</li>
+<li>
+<p>以上操作全部可以在<code>Github</code>网站上进行，完成后你可以<code>clone</code>新分支到本地修改。</p>
+</li>
+<li>
+<p>修改完成后先<code>push</code>到自己先前新建的分支上去。</p>
+</li>
+<li>
+<p>在<code>Github</code>你<code>fork</code>的项目页面某处有一个<code>Pull Request</code>的按钮，接下来就是写好<code>commit</code>和<code>description</code>坐等远方的基友接受你的<code>PR</code>。</p>
+</li>
+</ol>
+<blockquote>
+<p>参考：</p>
+<p><a href="https://help.github.com/articles/fork-a-repo/">Fork A Repo</a></p>
+<p><a href="https://github.com/processing/processing/wiki/Contributing-to-Processing-with-Pull-Requests">Contributing to Processing with Pull Requests</a></p>
+</blockquote>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://ferstar.org/" target="_blank">ferstar</a>.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+               <p>Last Update 2016-01-24</p>
+        </div>
+    </body>
+</html>
