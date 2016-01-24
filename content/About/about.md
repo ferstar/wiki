@@ -7,7 +7,7 @@ date: 2016-01-24 09:06:35
 
 ## 来源
 
-逛知乎偶然碰到 [@tankywoo](https://github.com/tankywoo) 写的这个轻量级 wiki 框架 [http://simiki.org/](http://simiki.org/) ，于是从作者本人的 [wiki](http://wiki.tankywoo.com/) 直接照搬过来，非常感谢！
+.逛知乎偶然碰到 [@tankywoo](https://github.com/tankywoo) 写的这个轻量级 wiki 框架 [http://simiki.org/](http://simiki.org/) ，于是从作者本人的 [wiki](http://wiki.tankywoo.com/) 直接照搬过来，非常感谢！
 
 ## 用途
 

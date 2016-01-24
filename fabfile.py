@@ -160,7 +160,7 @@ def commit():
 
     with settings(warn_only=True):
         # Changes not staged for commit
-        res = local('git status --porcelain 2>/dev/null | grep "^ M" | wc -l',
+        res = local('git status --porcelain 2>/dev/null | grep "^ " | wc -l',
                     capture=True)
         if int(res.strip()):
             local("git add {0}".format(commit_file))
