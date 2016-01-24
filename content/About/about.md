@@ -5,11 +5,11 @@ description: "关于此 wiki"
 date: 2016-01-24 09:06:35
 ---
 
-## 从何而来
+## 来源
 
 逛知乎偶然碰到 [@tankywoo](https://github.com/tankywoo) 写的这个轻量级 wiki 框架 [http://simiki.org/](http://simiki.org/) ，于是从作者本人的 [wiki](http://wiki.tankywoo.com/) 直接照搬过来，非常感谢！
 
-## 作何用途
+## 用途
 
 查漏补缺，温故知新
 
@@ -22,5 +22,7 @@ date: 2016-01-24 09:06:35
 > Weibo：[@ferstar](http://weibo.com/ferstar) 
 
 > Github：[@ferstar](http://github.com/ferstar)
+
+> Blog：[ferstar.org](http://ferstar.org)
 
 > Email：fer_star#qq.com
