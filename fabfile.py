@@ -68,8 +68,7 @@ def deploy_rsync(deploy_configs):
 def deploy_git(deploy_configs):
     '''for pages service of such as github/gitcafe ...'''
     with settings(warn_only=True):
-        local('which -s ghp-import', capture=False)
-        res = local('echo $?', capture=True)
+        res = local('which -s ghp-import; echo $?', capture=True)
         if int(res.strip()):
             do_exit('Warning: ghp-import not installed! '
                     'run: `pip install ghp-import`')
@@ -77,9 +76,9 @@ def deploy_git(deploy_configs):
     remote = deploy_configs.get('remote', 'origin')
     branch = deploy_configs.get('branch', 'gh-pages')
     # commit gh-pages branch and push to remote
-    _mesg = 'Auto Update Site By Fabric'
+    _mesg = 'Update output documentation'
     local('ghp-import -p -m "{0}" -r {1} -b {2} {3}' \
-          .format(_mesg, remote, branch, output_dir), capture=False)
+          .format(_mesg, remote, branch, output_dir))
 
 
 def deploy_ftp(deploy_configs):
