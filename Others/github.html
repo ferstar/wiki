@@ -39,7 +39,40 @@
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <h2 id="pr">PR流程</h2>
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#git-status-porcelain">git status --porcelain</a></li>
+<li><a href="#pr">PR流程</a></li>
+</ul>
+</div>
+<h2 id="git-status-porcelain">git status --porcelain</h2>
+<p><a href="https://github.com/tankywoo/simiki/blob/master/simiki/conf_templates/fabfile.py#L163">L163</a>这里会漏掉两种情况：</p>
+<div class="hlcode"><pre><span class="cp"># 1. 有文件被删除 git status --porcelain命令结果前两位字符应该是</span>
+<span class="err">空格</span><span class="o">+</span><span class="n">D</span>
+<span class="cp"># 2. 新添加的文件没有被追踪 git status --porcelain 输出前两位字符是</span>
+<span class="o">??</span>
+<span class="cp"># 3. 有文件被修改</span>
+<span class="err">空格</span><span class="o">+</span><span class="n">M</span>
+</pre></div>
+
+
+<p>所以需要稍微修改下正则，匹配到前两种情况
+<code>res = local('git status --porcelain 2&gt;/dev/null | egrep \'^ [DM]|^\?\?\' | wc -l', capture=True)</code></p>
+<p>然后检测到有改动执行<code>git add -A</code>后
+<a href="https://github.com/tankywoo/simiki/blob/master/simiki/conf_templates/fabfile.py#L169">L169</a>这里会漏掉三种情况</p>
+<div class="hlcode"><pre><span class="cp"># 1. 文件被重命名</span>
+<span class="n">R</span><span class="o">+</span><span class="err">空格</span>
+<span class="cp"># 2. 文件被删除</span>
+<span class="n">D</span><span class="o">+</span><span class="err">空格</span>
+<span class="cp"># 3. 有新文件</span>
+<span class="n">A</span><span class="o">+</span><span class="err">空格</span>
+<span class="cp"># 4. 文件被修改</span>
+<span class="n">M</span><span class="o">+</span><span class="err">空格</span>
+</pre></div>
+
+
+<p>所以需要修改下正则，匹配到前三种情况
+<code>res = local('git status --porcelain 2&gt;/dev/null | egrep \'^[ADMR]\' | wc -l', capture=True)</code></p>
+<h2 id="pr">PR流程</h2>
 <blockquote>
 <p>私以为<code>Gihub</code>的精髓就是这个<code>Pull Request</code>，可以让大家一起愉快的搞基。一般<code>PR</code>流程如下：</p>
 </blockquote>
