@@ -1,0 +1,372 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>MongoDB - My Personal Wiki Site</title>
+        <meta name="keywords" content="wiki, linux, python"/>
+        <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, Linux, Ops-Dev etc."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#DataBase">DataBase</a> » MongoDB
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="_1">介绍</h2>
+<p>MongoDB 是一个基于分布式文件存储的数据库。由 C++ 语言编写。旨在为 WEB 应用提供可扩展的高性能数据存储解决方案。
+MongoDB 是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。</p>
+<h2 id="_2">初阶</h2>
+<h3 id="_3">安装</h3>
+<p>Ubuntu默认仓库里的有点问题，还是老老实实按照官网的步骤来比较好</p>
+<p><a href="https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/">https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/</a> </p>
+<p>官网连接比较慢，最好挂梯子安装比较节省时间</p>
+<p><code>export http_proxy=http://xxx:port</code></p>
+<p>可能官网自己也对版本稳定性没有信心，提供了冻结 MongoDB 自动更新的方法</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="s">&quot;mongodb-org hold&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">--</span><span class="n">set</span><span class="o">-</span><span class="n">selections</span>
+<span class="n">echo</span> <span class="s">&quot;mongodb-org-server hold&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">--</span><span class="n">set</span><span class="o">-</span><span class="n">selections</span>
+<span class="n">echo</span> <span class="s">&quot;mongodb-org-shell hold&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">--</span><span class="n">set</span><span class="o">-</span><span class="n">selections</span>
+<span class="n">echo</span> <span class="s">&quot;mongodb-org-mongos hold&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">--</span><span class="n">set</span><span class="o">-</span><span class="n">selections</span>
+<span class="n">echo</span> <span class="s">&quot;mongodb-org-tools hold&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">--</span><span class="n">set</span><span class="o">-</span><span class="n">selections</span>
+</pre></div>
+
+
+<p>然后启动<code>sudo service mongod start</code>报错：</p>
+<div class="hlcode"><pre><span class="n">Failed</span> <span class="n">to</span> <span class="n">start</span> <span class="n">mongod</span><span class="p">.</span><span class="n">service</span><span class="o">:</span> <span class="n">Unit</span> <span class="n">mongod</span><span class="p">.</span><span class="n">service</span> <span class="n">failed</span> <span class="n">to</span> <span class="n">load</span><span class="o">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span><span class="p">.</span>
+</pre></div>
+
+
+<p>这货根本旧没有建立 mongod 这个 service，所以只能自己建一个
+<a href="https://gist.github.com/ferstar/ecef75c46834019627af">install-mongodb.sh</a> </p>
+<h3 id="_4">导入数据</h3>
+<p>https://docs.mongodb.org/getting-started/python/import-data/</p>
+<p><code>mongoimport --db test --collection restaurants --drop --file primer-dataset.json</code></p>
+<p>输出如下</p>
+<div class="hlcode"><pre><span class="mi">2016</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">25</span><span class="n">T22</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">36.399</span><span class="o">+</span><span class="mi">0800</span>    <span class="n">connected</span> <span class="n">to</span><span class="o">:</span> <span class="n">localhost</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">25</span><span class="n">T22</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">36.400</span><span class="o">+</span><span class="mi">0800</span>    <span class="n">dropping</span><span class="o">:</span> <span class="n">test</span><span class="p">.</span><span class="n">restaurants</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">25</span><span class="n">T22</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">37.258</span><span class="o">+</span><span class="mi">0800</span>    <span class="n">imported</span> <span class="mi">25359</span> <span class="n">documents</span>
+</pre></div>
+
+
+<h3 id="pymongo">安装 pymongo</h3>
+<p><code>suod pip3 install pymongo</code></p>
+<h3 id="_5">建立连接</h3>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">from</span> <span class="n">pymongo</span> <span class="n">import</span> <span class="n">MongoClient</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">()</span>
+</pre></div>
+
+
+<p>不带参数默认连接<code>localhost</code>的<code>27017</code>端口，带参数</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s">&quot;mongodb://localhost:27017&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<h3 id="_6">访问数据库对象</h3>
+<p>两种不同的方式</p>
+<div class="hlcode"><pre><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">primer</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="err">&#39;</span><span class="n">primer</span><span class="err">&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>结果都是一样的</p>
+<div class="hlcode"><pre><span class="n">Database</span><span class="p">(</span><span class="n">MongoClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="p">[</span><span class="err">&#39;</span><span class="n">localhost</span><span class="o">:</span><span class="mi">27017</span><span class="err">&#39;</span><span class="p">],</span> <span class="n">document_class</span><span class="o">=</span><span class="n">dict</span><span class="p">,</span> <span class="n">tz_aware</span><span class="o">=</span><span class="n">False</span><span class="p">,</span> <span class="n">connect</span><span class="o">=</span><span class="n">True</span><span class="p">),</span> <span class="err">&#39;</span><span class="n">primer</span><span class="err">&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<h3 id="collection-objects">访问 Collection Objects</h3>
+<p>依然有两种方式</p>
+<div class="hlcode"><pre><span class="n">db</span><span class="p">.</span><span class="n">dataset</span>
+<span class="n">db</span><span class="p">[</span><span class="err">&#39;</span><span class="n">dataset</span><span class="err">&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>结果一样</p>
+<div class="hlcode"><pre><span class="n">Collection</span><span class="p">(</span><span class="n">Database</span><span class="p">(</span><span class="n">MongoClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="p">[</span><span class="err">&#39;</span><span class="n">localhost</span><span class="o">:</span><span class="mi">27017</span><span class="err">&#39;</span><span class="p">],</span> <span class="n">document_class</span><span class="o">=</span><span class="n">dict</span><span class="p">,</span> <span class="n">tz_aware</span><span class="o">=</span><span class="n">False</span><span class="p">,</span> <span class="n">connect</span><span class="o">=</span><span class="n">True</span><span class="p">),</span> <span class="err">&#39;</span><span class="n">primer</span><span class="err">&#39;</span><span class="p">),</span> <span class="err">&#39;</span><span class="n">dataset</span><span class="err">&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>You may also assign the collection object to a variable for use elsewhere, as in the following examples:</p>
+<div class="hlcode"><pre><span class="n">coll</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">dataset</span>
+<span class="n">coll</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="err">&#39;</span><span class="n">dataset</span><span class="err">&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<h3 id="_7">增</h3>
+<div class="hlcode"><pre><span class="nt">from</span> <span class="nt">datetime</span> <span class="nt">import</span> <span class="nt">datetime</span>
+<span class="nt">from</span> <span class="nt">pymongo</span> <span class="nt">import</span> <span class="nt">MongoClient</span>
+
+
+<span class="nt">client</span> <span class="o">=</span> <span class="nt">MongoClient</span><span class="o">()</span>
+<span class="nt">db</span> <span class="o">=</span> <span class="nt">client</span><span class="nc">.test</span>
+
+<span class="nt">result</span> <span class="o">=</span> <span class="nt">db</span><span class="nc">.restaurants.insert_one</span><span class="o">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;address&quot;</span><span class="o">:</span> <span class="err">{</span>
+            <span class="s2">&quot;street&quot;</span><span class="o">:</span> <span class="s2">&quot;2 Avenue&quot;</span><span class="o">,</span>
+            <span class="s2">&quot;zipcode&quot;</span><span class="o">:</span> <span class="s2">&quot;10075&quot;</span><span class="o">,</span>
+            <span class="s2">&quot;building&quot;</span><span class="o">:</span> <span class="s2">&quot;1480&quot;</span><span class="o">,</span>
+            <span class="s2">&quot;coord&quot;</span><span class="o">:</span> <span class="cp">[</span><span class="o">-</span><span class="mf">73.9557413</span><span class="p">,</span> <span class="mf">40.7720266</span><span class="cp">]</span>
+        <span class="p">}</span><span class="o">,</span>
+        <span class="s2">&quot;borough&quot;</span><span class="o">:</span> <span class="s2">&quot;Manhattan&quot;</span><span class="o">,</span>
+        <span class="s2">&quot;cuisine&quot;</span><span class="o">:</span> <span class="s2">&quot;Italian&quot;</span><span class="o">,</span>
+        <span class="s2">&quot;grades&quot;</span><span class="o">:</span> <span class="cp">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="nx">datetime.strptime</span><span class="p">(</span><span class="s2">&quot;2014-10-01&quot;</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-%d&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;grade&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="mi">11</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="nx">datetime.strptime</span><span class="p">(</span><span class="s2">&quot;2014-01-16&quot;</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-%d&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;grade&quot;</span><span class="p">:</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="mi">17</span>
+            <span class="p">}</span>
+        <span class="cp">]</span><span class="o">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Vella&quot;</span><span class="o">,</span>
+        <span class="s2">&quot;restaurant_id&quot;</span><span class="o">:</span> <span class="s2">&quot;41704620&quot;</span>
+    <span class="err">}</span>
+<span class="o">)</span>
+</pre></div>
+
+
+<p>如果 collection 不存在则会新建，插入成功后返回一个 InsertOneResult 的对象，包括一个叫 inserted_id 的属性，可以查看这个属性的值</p>
+<p><code>result.inserted_id</code></p>
+<p>这个值可能会略有不同</p>
+<p><code>ObjectId("56a632357fe9e361aba6102d")</code></p>
+<h3 id="_8">查</h3>
+<div class="hlcode"><pre><span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">()</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">test</span>
+
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">restaurants</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+</pre></div>
+
+
+<p>结果</p>
+<div class="hlcode"><pre><span class="p">{</span><span class="err">&#39;</span><span class="n">name</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Vella</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">borough</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Manhattan</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">grades</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">[{</span><span class="err">&#39;</span><span class="n">date</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="err">&#39;</span><span class="n">grade</span><span class="err">&#39;</span><span class="o">:</span> <span class="sc">&#39;A&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">score</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">11</span><span class="p">},</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">date</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="err">&#39;</span><span class="n">grade</span><span class="err">&#39;</span><span class="o">:</span> <span class="sc">&#39;B&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">score</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">17</span><span class="p">}],</span> <span class="err">&#39;</span><span class="n">restaurant_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">41704620</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">56</span><span class="n">a632357fe9e361aba6102d</span><span class="err">&#39;</span><span class="p">),</span> <span class="err">&#39;</span><span class="n">address</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">street</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">2</span> <span class="n">Avenue</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">coord</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">73.9557413</span><span class="p">,</span> <span class="mf">40.7720266</span><span class="p">],</span> <span class="err">&#39;</span><span class="n">zipcode</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">10075</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">building</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">1480</span><span class="err">&#39;</span><span class="p">},</span> <span class="err">&#39;</span><span class="n">cuisine</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Italian</span><span class="err">&#39;</span><span class="p">}</span>
+<span class="n">balabala</span><span class="err">一大堆</span>
+</pre></div>
+
+
+<p>更精细的查找，一堆鸟文，总之支持各种精确匹配</p>
+<p>格式如下</p>
+<div class="hlcode"><pre><span class="p">{</span> <span class="o">&lt;</span><span class="nx">field1</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nx">value1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="nx">field2</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nx">value2</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">...</span> <span class="p">}</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="nx">db.restaurants.find</span><span class="p">({</span><span class="s2">&quot;borough&quot;</span><span class="p">:</span> <span class="s2">&quot;Manhattan&quot;</span><span class="p">})</span>
+</pre></div>
+
+
+<h4 id="_9">特殊条件查询（支持操作符）</h4>
+<p>支持比较和与或逻辑操作，格式如下</p>
+<div class="hlcode"><pre><span class="p">{</span> <span class="o">&lt;</span><span class="nx">field1</span><span class="o">&gt;</span><span class="p">:</span> <span class="p">{</span> <span class="o">&lt;</span><span class="nx">operator1</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nx">value1</span><span class="o">&gt;</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+
+
+<ul>
+<li>大于操作  ($gt)</li>
+</ul>
+<p>找出一堆数据里打分超过 30 分的查询命令</p>
+<div class="hlcode"><pre><span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">restaurants</span><span class="p">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;grades.score&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s">&quot;$gt&quot;</span><span class="o">:</span> <span class="mi">30</span><span class="p">}})</span>
+<span class="k">for</span> <span class="n">document</span> <span class="n">in</span> <span class="n">cursor</span><span class="o">:</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>小于操作 ($lt)</li>
+</ul>
+<p><code>cursor = db.restaurants.find({"grades.score": {"$lt": 10}})</code></p>
+<ul>
+<li>等于操作 ($eq)</li>
+</ul>
+<h4 id="_10">组合条件查询</h4>
+<ul>
+<li>逻辑与</li>
+</ul>
+<p>用半角逗号隔开，如找既是意大利邮编又是 10075 的东西</p>
+<p><code>cursor = db.restaurants.find({"cuisine": "Italian", "address.zipcode": "10075"})</code></p>
+<ul>
+<li>逻辑或</li>
+</ul>
+<p>这个操作格式比较奇特，如</p>
+<div class="hlcode"><pre><span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">restaurants</span><span class="p">.</span><span class="n">find</span><span class="p">(</span>
+    <span class="p">{</span><span class="s">&quot;$or&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s">&quot;cuisine&quot;</span><span class="o">:</span> <span class="s">&quot;Italian&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;address.zipcode&quot;</span><span class="o">:</span> <span class="s">&quot;10075&quot;</span><span class="p">}]})</span>
+</pre></div>
+
+
+<h4 id="_11">神技：查询结果排序</h4>
+<p>将查询结果按照 borough 升序，每个 borough 结果按照 address.zipcode 降序排列</p>
+<div class="hlcode"><pre><span class="nt">import</span> <span class="nt">pymongo</span>
+<span class="nt">cursor</span> <span class="o">=</span> <span class="nt">db</span><span class="nc">.restaurants.find</span><span class="o">()</span><span class="nc">.sort</span><span class="o">(</span><span class="cp">[</span>
+    <span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">,</span> <span class="nx">pymongo.ASCENDING</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;address.zipcode&quot;</span><span class="p">,</span> <span class="nx">pymongo.DESCENDING</span><span class="p">)</span>
+<span class="cp">]</span><span class="o">)</span>
+</pre></div>
+
+
+<h3 id="_12">改</h3>
+<p>To change a field value, MongoDB provides update operators, such as $set to modify values. Some update operators, such as $set, will create the field if the field does not exist. See the individual update operators reference.</p>
+<p>$set 操作符可以更改内容，如果表单不存在，那么会新建</p>
+<h4 id="top-level-fields">更改 Top-Level Fields 这玩意咋翻译，顶层数据？</h4>
+<p>The following operation updates the first document with name equal to "Juni", using the $set operator to update the cuisine field and the $currentDate operator to update the lastModified field with the current date.</p>
+<p>大意就是要给一个叫 Juni 的家伙改下风格和时间</p>
+<div class="hlcode"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">restaurants</span><span class="p">.</span><span class="n">update_one</span><span class="p">(</span>
+    <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Juni&quot;</span><span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s">&quot;$set&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s">&quot;cuisine&quot;</span><span class="o">:</span> <span class="s">&quot;American (New)&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;$currentDate&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s">&quot;lastModified&quot;</span><span class="o">:</span> <span class="n">True</span><span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<p>这个操作会返回更改命中对象的次数，<code>result.matched_count</code>，返回 1 说明只匹配并修改了一次</p>
+<p>还有个方法可以得到数据修改次数 <code>result.modified_count</code> 这里返回应该还是 1 因为目前为止，只有一个数据对象被修改了。</p>
+<h4 id="_13">更改内层数据</h4>
+<p>同上，返回结果记数也可查</p>
+<div class="hlcode"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">restaurants</span><span class="p">.</span><span class="n">update_one</span><span class="p">(</span>
+    <span class="p">{</span><span class="s">&quot;restaurant_id&quot;</span><span class="o">:</span> <span class="s">&quot;41156888&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;$set&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s">&quot;address.street&quot;</span><span class="o">:</span> <span class="s">&quot;East 31st Street&quot;</span><span class="p">}}</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<h4 id="_14">批量更改</h4>
+<p>update_one()  方法更改单个文件，对应的 update_many() 可以改一坨，如</p>
+<div class="hlcode"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">restaurants</span><span class="p">.</span><span class="n">update_many</span><span class="p">(</span>
+    <span class="p">{</span><span class="s">&quot;address.zipcode&quot;</span><span class="o">:</span> <span class="s">&quot;10016&quot;</span><span class="p">,</span> <span class="s">&quot;cuisine&quot;</span><span class="o">:</span> <span class="s">&quot;Other&quot;</span><span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s">&quot;$set&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s">&quot;cuisine&quot;</span><span class="o">:</span> <span class="s">&quot;Category To Be Determined&quot;</span><span class="p">},</span>
+        <span class="s">&quot;$currentDate&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s">&quot;lastModified&quot;</span><span class="o">:</span> <span class="n">True</span><span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<p>依然可以如上述查到匹配的次数</p>
+<h4 id="replace_one">替换 replace_one()</h4>
+<blockquote>
+<p>注意：替换操作后，目标将只包含被替换的内容，原来的内容将会被抹除</p>
+</blockquote>
+<div class="hlcode"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">restaurants</span><span class="p">.</span><span class="n">replace_one</span><span class="p">(</span>
+    <span class="p">{</span><span class="s">&quot;restaurant_id&quot;</span><span class="o">:</span> <span class="s">&quot;41704620&quot;</span><span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Vella 2&quot;</span><span class="p">,</span>
+        <span class="s">&quot;address&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s">&quot;coord&quot;</span><span class="o">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">73.9557413</span><span class="p">,</span> <span class="mf">40.7720266</span><span class="p">],</span>
+            <span class="s">&quot;building&quot;</span><span class="o">:</span> <span class="s">&quot;1480&quot;</span><span class="p">,</span>
+            <span class="s">&quot;street&quot;</span><span class="o">:</span> <span class="s">&quot;2 Avenue&quot;</span><span class="p">,</span>
+            <span class="s">&quot;zipcode&quot;</span><span class="o">:</span> <span class="s">&quot;10075&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<h4 id="_15">额外信息</h4>
+<p>update_*() 方法如果匹配不到，将不做任何操作，这点跟 set() 方法不同。</p>
+<h3 id="_16">删</h3>
+<h4 id="_17">条件删除</h4>
+<p>删除的操作总是欢快的，如干掉麦哈顿</p>
+<p><code>result = db.restaurants.delete_many({"borough": "Manhattan"})</code></p>
+<p>同样，查看 deleted_count 属性可以得到我们删了多少个</p>
+<p><code>result.deleted_count</code> 如果你使用的是事例中导入的数据的话，这个次数应该是 10259 </p>
+<h4 id="_18">全删</h4>
+<p>传入一个空字典<code>{}</code>，干掉所有数据</p>
+<p><code>result = db.restaurants.delete_many({})</code></p>
+<p>同样可以查到删了多少条数据，差不多是 15100 条的样子</p>
+<h4 id="collection">重置 / 清空 Collection</h4>
+<p>删除操作只是删除了 collection 中的内容，但 collection 本身及索引还是会保留。但往往删除整个 collection 更有效的方法就是干掉整个 collection，drop() 方法可以做到这点，清空并重置 collection。</p>
+<p><code>db.restaurants.drop()</code></p>
+<p>这个时候我们如果再查询数据库的话，会发现什么都没有了。</p>
+<h3 id="_19">数据聚合 /数据统计</h3>
+<p>aggregate() 方法提供了基本的数据统计功能，格式如下</p>
+<p><code>db.collection.aggregate([&lt;stage1&gt;, &lt;stage2&gt;, ...])</code></p>
+<p>注意，因为我们之前已经清空了所有数据， 所以需要再次导入之，不然没得玩。</p>
+<p><code>mongoimport --db test --collection restaurants --drop --file dataset.json</code></p>
+<h4 id="_20">按照字段分组并记数</h4>
+<p>Use the $group stage to group by a specified key. In the $group stage, specify the group by key in the _id field. $group accesses fields by the field path, which is the field name prefixed by a dollar sign $. The $group stage can use accumulators to perform calculations for each group. The following example groups the documents in the restaurants collection by the borough field and uses the $sum accumulator to count the documents for each group.</p>
+<p>受不了了，粘一段英文，慢慢嚼。按街区分组，并统计每组数目总和</p>
+<div class="hlcode"><pre><span class="nt">cursor</span> <span class="o">=</span> <span class="nt">db</span><span class="nc">.restaurants.aggregate</span><span class="o">(</span>
+    <span class="cp">[</span>
+        <span class="p">{</span><span class="s2">&quot;$group&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;$borough&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$sum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}}</span>
+    <span class="cp">]</span>
+<span class="o">)</span>
+
+<span class="nt">for</span> <span class="nt">document</span> <span class="nt">in</span> <span class="nt">cursor</span><span class="o">:</span>
+    <span class="nt">print</span><span class="o">(</span><span class="nt">document</span><span class="o">)</span>
+</pre></div>
+
+
+<p>返回分组结果，注意因为 for 循环顺序不定，所以得到的结果序列可能与官方教程略有不同。</p>
+<div class="hlcode"><pre><span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Missing</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">51</span><span class="p">}</span>
+<span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Staten</span> <span class="n">Island</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">969</span><span class="p">}</span>
+<span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Manhattan</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">10259</span><span class="p">}</span>
+<span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Brooklyn</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">6086</span><span class="p">}</span>
+<span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Queens</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">5656</span><span class="p">}</span>
+<span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Bronx</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">2338</span><span class="p">}</span>
+</pre></div>
+
+
+<h4 id="_21">筛选分组数据</h4>
+<p>先干这碗热翔</p>
+<p>Use the $match stage to filter documents. $match uses the MongoDB query syntax. The following pipeline uses $match to query the restaurants collection for documents with borough equal to "Queens" and cuisine equal to Brazilian. Then the $group stage groups the matching documents by the address.zipcode field and uses the $sum accumulator to calculate the count. $group accesses fields by the field path, which is the field name prefixed by a dollar sign $.</p>
+<p>大意，找到"Queens", "cuisine": "Brazilian"这几个区匹配操作</p>
+<div class="hlcode"><pre><span class="nt">cursor</span> <span class="o">=</span> <span class="nt">db</span><span class="nc">.restaurants.aggregate</span><span class="o">(</span>
+    <span class="cp">[</span>
+        <span class="p">{</span><span class="s2">&quot;$match&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;borough&quot;</span><span class="p">:</span> <span class="s2">&quot;Queens&quot;</span><span class="p">,</span> <span class="s2">&quot;cuisine&quot;</span><span class="p">:</span> <span class="s2">&quot;Brazilian&quot;</span><span class="p">}},</span>
+        <span class="p">{</span><span class="s2">&quot;$group&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;$address.zipcode&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$sum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}}</span>
+    <span class="cp">]</span>
+<span class="o">)</span>
+
+<span class="nt">for</span> <span class="nt">document</span> <span class="nt">in</span> <span class="nt">cursor</span><span class="o">:</span>
+    <span class="nt">print</span><span class="o">(</span><span class="nt">document</span><span class="o">)</span>
+</pre></div>
+
+
+<h3 id="indexes-with-pymongo">Indexes with PyMongo</h3>
+<p>https://docs.mongodb.org/getting-started/python/indexes/</p>
+<p>最后一章，明日继续</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://ferstar.org/" target="_blank">ferstar</a>.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+               <p>Last Update 2016-01-25</p>
+        </div>
+    </body>
+</html>
