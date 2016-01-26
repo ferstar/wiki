@@ -56,7 +56,7 @@
 </ul>
 </li>
 <li><a href="#_12">改</a><ul>
-<li><a href="#top-level-fields">更改 Top-Level Fields 这玩意咋翻译，顶层数据？</a></li>
+<li><a href="#top-level-fields">更改 Top-Level Fields</a></li>
 <li><a href="#_13">更改内层数据</a></li>
 <li><a href="#_14">批量更改</a></li>
 <li><a href="#replace_one">替换 replace_one()</a></li>
@@ -74,7 +74,12 @@
 <li><a href="#_21">筛选分组数据</a></li>
 </ul>
 </li>
-<li><a href="#indexes-with-pymongo">Indexes with PyMongo</a></li>
+<li><a href="#_22">索引</a><ul>
+<li><a href="#_23">概述</a></li>
+<li><a href="#_24">在单一字段建立索引</a></li>
+<li><a href="#_25">创建复杂索引</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -114,6 +119,7 @@ MongoDB 是一个介于关系数据库和非关系数据库之间的产品，是
 </pre></div>
 
 
+<p>导入 25k 的数据居然不到一秒，果然效率</p>
 <h3 id="pymongo">安装 pymongo</h3>
 <p><code>suod pip3 install pymongo</code></p>
 <h3 id="_5">建立连接</h3>
@@ -275,7 +281,8 @@ MongoDB 是一个介于关系数据库和非关系数据库之间的产品，是
 <h3 id="_12">改</h3>
 <p>To change a field value, MongoDB provides update operators, such as $set to modify values. Some update operators, such as $set, will create the field if the field does not exist. See the individual update operators reference.</p>
 <p>$set 操作符可以更改内容，如果表单不存在，那么会新建</p>
-<h4 id="top-level-fields">更改 Top-Level Fields 这玩意咋翻译，顶层数据？</h4>
+<h4 id="top-level-fields">更改 Top-Level Fields</h4>
+<p>这玩意咋翻译，顶层数据？</p>
 <p>The following operation updates the first document with name equal to "Juni", using the $set operator to update the cuisine field and the $currentDate operator to update the lastModified field with the current date.</p>
 <p>大意就是要给一个叫 Juni 的家伙改下风格和时间</p>
 <div class="hlcode"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">restaurants</span><span class="p">.</span><span class="n">update_one</span><span class="p">(</span>
@@ -381,7 +388,7 @@ MongoDB 是一个介于关系数据库和非关系数据库之间的产品，是
 <h4 id="_21">筛选分组数据</h4>
 <p>先干这碗热翔</p>
 <p>Use the $match stage to filter documents. $match uses the MongoDB query syntax. The following pipeline uses $match to query the restaurants collection for documents with borough equal to "Queens" and cuisine equal to Brazilian. Then the $group stage groups the matching documents by the address.zipcode field and uses the $sum accumulator to calculate the count. $group accesses fields by the field path, which is the field name prefixed by a dollar sign $.</p>
-<p>大意，找到"Queens", "cuisine": "Brazilian"这几个区匹配操作</p>
+<p>大意，先找到皇后街区的巴西风格餐馆，然后把找到的馆子按照邮编分组，并统计每组馆子个数</p>
 <div class="hlcode"><pre><span class="nt">cursor</span> <span class="o">=</span> <span class="nt">db</span><span class="nc">.restaurants.aggregate</span><span class="o">(</span>
     <span class="cp">[</span>
         <span class="p">{</span><span class="s2">&quot;$match&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;borough&quot;</span><span class="p">:</span> <span class="s2">&quot;Queens&quot;</span><span class="p">,</span> <span class="s2">&quot;cuisine&quot;</span><span class="p">:</span> <span class="s2">&quot;Brazilian&quot;</span><span class="p">}},</span>
@@ -394,9 +401,45 @@ MongoDB 是一个介于关系数据库和非关系数据库之间的产品，是
 </pre></div>
 
 
-<h3 id="indexes-with-pymongo">Indexes with PyMongo</h3>
-<p>https://docs.mongodb.org/getting-started/python/indexes/</p>
-<p>最后一章，明日继续</p>
+<p>结果比较诡异，我的结果跟官网教程结果是反的。</p>
+<div class="hlcode"><pre><span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">11377</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">11368</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">11101</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">11106</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="p">{</span><span class="err">&#39;</span><span class="n">_id</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">11103</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">count</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">}</span>
+</pre></div>
+
+
+<h3 id="_22">索引</h3>
+<h4 id="_23">概述</h4>
+<p>索引支持非常高效的查询。MongoDB 会在新建一个 collection 时会自动在<code>_id</code>字段建立索引</p>
+<p>creat_index() 方法可以为 collection 建立索引，只会在索引不存在时建立索引。格式</p>
+<p><code>[ ( &lt;field1&gt;: &lt;type1&gt; ), ... ]</code></p>
+<blockquote>
+<p>For an ascending index, specify pymongo.ASCENDING for <type>.</p>
+<p>For a descending index, specify pymongo.DESCENDING for <type>.</p>
+</blockquote>
+<h4 id="_24">在单一字段建立索引</h4>
+<p>例：在餐馆这个 collection 的 cuisine 字段创建一个递增的索引</p>
+<div class="hlcode"><pre><span class="n">import</span> <span class="n">pymongo</span>
+<span class="n">db</span><span class="p">.</span><span class="n">restaurants</span><span class="p">.</span><span class="n">create_index</span><span class="p">([(</span><span class="s">&quot;cuisine&quot;</span><span class="p">,</span> <span class="n">pymongo</span><span class="p">.</span><span class="n">ASCENDING</span><span class="p">)])</span>
+</pre></div>
+
+
+<p>返回创建的索引名称 <code>'cuisine_1'</code></p>
+<h4 id="_25">创建复杂索引</h4>
+<p>嗯，这个功能比较不好阐述，照例子描述之。</p>
+<p>例：先对 cuisine 创建递增序列，然后对于每个 cuisine 里的 address.zipcode 创建递减序列</p>
+<div class="hlcode"><pre><span class="nt">import</span> <span class="nt">pymongo</span>
+<span class="nt">db</span><span class="nc">.restaurants.create_index</span><span class="o">(</span><span class="cp">[</span>
+    <span class="p">(</span><span class="s2">&quot;cuisine&quot;</span><span class="p">,</span> <span class="nx">pymongo.ASCENDING</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;address.zipcode&quot;</span><span class="p">,</span> <span class="nx">pymongo.DESCENDING</span><span class="p">)</span>
+<span class="cp">]</span><span class="o">)</span>
+</pre></div>
+
+
+<p>此方法同样返回创建的索引名</p>
+<p><code>"u'cuisine_1_address.zipcode_-1'"</code></p>
     </div>
 
         </div>
@@ -406,7 +449,7 @@ MongoDB 是一个介于关系数据库和非关系数据库之间的产品，是
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-               <p>Last Update 2016-01-25</p>
+               <p>Last Update 2016-01-26</p>
         </div>
     </body>
 </html>
