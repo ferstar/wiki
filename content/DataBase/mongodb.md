@@ -55,6 +55,8 @@ https://docs.mongodb.org/getting-started/python/import-data/
 2016-01-25T22:17:37.258+0800	imported 25359 documents
 ```
 
+导入 25k 的数据居然不到一秒，果然效率
+
 ### 安装 pymongo
 
 `suod pip3 install pymongo`
@@ -245,7 +247,9 @@ To change a field value, MongoDB provides update operators, such as $set to modi
 
 $set 操作符可以更改内容，如果表单不存在，那么会新建
 
-#### 更改 Top-Level Fields 这玩意咋翻译，顶层数据？
+#### 更改 Top-Level Fields 
+
+这玩意咋翻译，顶层数据？
 
 The following operation updates the first document with name equal to "Juni", using the $set operator to update the cuisine field and the $currentDate operator to update the lastModified field with the current date.
 
@@ -388,7 +392,7 @@ for document in cursor:
 
 Use the $match stage to filter documents. $match uses the MongoDB query syntax. The following pipeline uses $match to query the restaurants collection for documents with borough equal to "Queens" and cuisine equal to Brazilian. Then the $group stage groups the matching documents by the address.zipcode field and uses the $sum accumulator to calculate the count. $group accesses fields by the field path, which is the field name prefixed by a dollar sign $.
 
-大意，找到"Queens", "cuisine": "Brazilian"这几个区匹配操作
+大意，先找到皇后街区的巴西风格餐馆，然后把找到的馆子按照邮编分组，并统计每组馆子个数
 
 ```
 cursor = db.restaurants.aggregate(
@@ -403,8 +407,58 @@ for document in cursor:
 
 ```
 
-### Indexes with PyMongo
+结果比较诡异，我的结果跟官网教程结果是反的。
 
-https://docs.mongodb.org/getting-started/python/indexes/
+```
+{'_id': '11377', 'count': 1}
+{'_id': '11368', 'count': 1}
+{'_id': '11101', 'count': 2}
+{'_id': '11106', 'count': 3}
+{'_id': '11103', 'count': 1}
 
-最后一章，明日继续
+```
+
+### 索引
+
+#### 概述
+
+索引支持非常高效的查询。MongoDB 会在新建一个 collection 时会自动在`_id`字段建立索引
+
+creat_index() 方法可以为 collection 建立索引，只会在索引不存在时建立索引。格式
+
+`[ ( <field1>: <type1> ), ... ]`
+
+> For an ascending index, specify pymongo.ASCENDING for <type>.
+
+> For a descending index, specify pymongo.DESCENDING for <type>.
+
+#### 在单一字段建立索引
+
+例：在餐馆这个 collection 的 cuisine 字段创建一个递增的索引
+
+```
+import pymongo
+db.restaurants.create_index([("cuisine", pymongo.ASCENDING)])
+```
+
+返回创建的索引名称 `'cuisine_1'`
+
+#### 创建复杂索引
+
+嗯，这个功能比较不好阐述，照例子描述之。
+
+例：先对 cuisine 创建递增序列，然后对于每个 cuisine 里的 address.zipcode 创建递减序列
+
+```
+import pymongo
+db.restaurants.create_index([
+    ("cuisine", pymongo.ASCENDING),
+    ("address.zipcode", pymongo.DESCENDING)
+])
+
+```
+
+此方法同样返回创建的索引名
+
+`"u'cuisine_1_address.zipcode_-1'"`
+
