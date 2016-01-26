@@ -52,7 +52,7 @@
 </ul>
 </div>
 <h2 id="about">About</h2>
-<p>有两个小站的数据库是用阿里云的数据库，因为折扣期过去后觉得略贵，所以就有了想把数据库迁出去的想法，这里记录下过程。</p>
+<p>有两个小站的数据库是用阿里云的数据库，因为折扣期过去后觉得略贵，所以就有了想把数据库迁出去的想法，至于备份也是用很简单的<code>mysqldump</code>工具，数据很少，没必要出动主从热备什么高大上的方案。这里记录下过程。</p>
 <h2 id="_1">数据库迁移</h2>
 <div class="hlcode"><pre><span class="cp"># 备份远程数据库数据</span>
 <span class="n">mysqldump</span> <span class="o">-</span><span class="n">u</span> <span class="n">username</span> <span class="o">-</span><span class="n">p</span> <span class="o">-</span><span class="n">h</span> <span class="n">sql_server_host</span> <span class="n">database_name</span> <span class="o">&gt;</span> <span class="n">database_name</span><span class="p">.</span><span class="n">sql</span>
