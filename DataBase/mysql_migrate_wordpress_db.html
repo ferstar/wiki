@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>MySQL - My Personal Wiki Site</title>
+        <meta name="keywords" content="wiki, linux, python"/>
+        <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, Linux, Ops-Dev etc."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#DataBase">DataBase</a> » MySQL
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#about">About</a></li>
+<li><a href="#_1">数据库迁移</a><ul>
+<li><a href="#wordpresswp-configphp">WordPress配置部分"wp-config.php"</a></li>
+</ul>
+</li>
+<li><a href="#_2">更改默认监听地址</a><ul>
+<li><a href="#_3">数据库自动备份脚本</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="about">About</h2>
+<p>有两个小站的数据库是用阿里云的数据库，因为折扣期过去后觉得略贵，所以就有了想把数据库迁出去的想法，这里记录下过程。</p>
+<h2 id="_1">数据库迁移</h2>
+<div class="hlcode"><pre><span class="cp"># 备份远程数据库数据</span>
+<span class="n">mysqldump</span> <span class="o">-</span><span class="n">u</span> <span class="n">username</span> <span class="o">-</span><span class="n">p</span> <span class="o">-</span><span class="n">h</span> <span class="n">sql_server_host</span> <span class="n">database_name</span> <span class="o">&gt;</span> <span class="n">database_name</span><span class="p">.</span><span class="n">sql</span>
+<span class="cp"># 新建数据库</span>
+<span class="n">create</span> <span class="n">database</span> <span class="n">database_name</span><span class="p">;</span>
+<span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
+<span class="cp"># 添加用户/密码</span>
+<span class="n">create</span> <span class="n">user</span> <span class="err">&#39;</span><span class="n">username</span><span class="err">&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="err">&#39;</span><span class="n">password</span><span class="err">&#39;</span><span class="p">;</span>
+<span class="cp"># 设定数据库访问权限</span>
+<span class="n">grant</span> <span class="n">all</span> <span class="n">on</span> <span class="n">database_name</span><span class="p">.</span><span class="o">*</span> <span class="n">to</span> <span class="n">username</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="err">&#39;</span><span class="n">password</span><span class="err">&#39;</span><span class="p">;</span>
+<span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+<span class="cp"># 还原数据库备份</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">uusername</span> <span class="o">-</span><span class="n">ppassword</span> <span class="n">database_name</span> <span class="o">&lt;</span> <span class="n">database_name</span><span class="p">.</span><span class="n">sql</span>
+<span class="err">或</span>
+<span class="n">gzip</span> <span class="o">&lt;</span> <span class="n">database_name</span><span class="p">.</span><span class="n">sql</span><span class="p">.</span><span class="n">gz</span> <span class="o">|</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span> <span class="n">dataname</span>
+<span class="err">或：</span>
+<span class="n">zcat</span> <span class="n">database_name</span><span class="p">.</span><span class="n">sql</span><span class="p">.</span><span class="n">gz</span>  <span class="o">|</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span> <span class="n">dataname</span>
+</pre></div>
+
+
+<h3 id="wordpresswp-configphp">WordPress配置部分"wp-config.php"</h3>
+<div class="hlcode"><pre><span class="cm">/** MySQL主机 */</span>
+<span class="n">define</span><span class="p">(&#39;</span><span class="no">DB_HOST</span><span class="p">&#39;,</span> <span class="p">&#39;</span><span class="n">localhost</span><span class="p">&#39;);</span>
+</pre></div>
+
+
+<h2 id="_2">更改默认监听地址</h2>
+<blockquote>
+<p><a href="http://www.cyberciti.biz/faq/unix-linux-mysqld-server-bind-to-more-than-one-ip-address/">MySQL/MariaDB Server: Bind To Multiple IP Address</a> </p>
+</blockquote>
+<p>默认配置只允许<code>localhost</code>访问, 远程备份不方便, 所以需要更改下, 上面的文章说的很清楚, 关键的地方就在这个配置文件里<code>vi /etc/mysql/my.cnf</code>找到并如下更改:</p>
+<div class="hlcode"><pre><span class="n">bind</span><span class="o">-</span><span class="n">address</span>            <span class="o">=</span> <span class="mf">0.0.0.0</span>
+</pre></div>
+
+
+<p>改完后重启下<code>mysql</code>
+<code>service mysql restart</code></p>
+<p>检查效果<code>netstat -anp | grep 3306</code>如下</p>
+<div class="hlcode"><pre><span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">3306</span>            <span class="mf">0.0.0.0</span><span class="o">:*</span>               <span class="n">LISTEN</span>      <span class="mi">5173</span><span class="o">/</span><span class="n">mysqld</span>
+</pre></div>
+
+
+<p>这样就对外完全放开了3306的访问权限, 不安全, 可以通过<code>iptables</code>或者<code>ufw</code>之类防火墙限制下, 或者<code>mysql</code>本身就有限制公网ip账户登录的设定</p>
+<p>可以新建一个只具有<code>select,lock</code>权限的数据库用户, 比如<code>backup</code>, 然后在数据库开限制此用户的登录ip</p>
+<div class="hlcode"><pre><span class="n">create</span> <span class="n">user</span> <span class="err">&#39;</span><span class="n">backup</span><span class="err">&#39;</span> <span class="n">identified</span> <span class="n">by</span>  <span class="err">&#39;</span><span class="n">back_up</span><span class="err">&#39;</span><span class="p">;</span>
+<span class="n">grant</span> <span class="n">select</span><span class="p">,</span><span class="n">lock</span> <span class="n">tables</span> <span class="n">on</span> <span class="n">database_name</span><span class="p">.</span><span class="o">*</span> <span class="n">to</span> <span class="n">backup</span><span class="err">@&#39;备份服务器</span><span class="n">ip</span><span class="err">地址&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="err">&#39;</span><span class="n">back_up</span><span class="err">&#39;</span><span class="p">;</span>
+<span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+</pre></div>
+
+
+<p>检查下数据库内容<code>select host, user from mysql.user;</code></p>
+<div class="hlcode"><pre><span class="o">+----------------+------------------+</span>
+<span class="o">|</span> <span class="n">host</span>           <span class="o">|</span> <span class="n">user</span>             <span class="o">|</span>
+<span class="o">+----------------+------------------+</span>
+<span class="o">|</span> <span class="mf">114.114.114.114</span><span class="o">|</span> <span class="n">backup</span>           <span class="o">|</span>
+<span class="o">|</span> <span class="mf">127.0.0.1</span>      <span class="o">|</span> <span class="n">root</span>             <span class="o">|</span>
+<span class="o">|</span> <span class="o">::</span><span class="mi">1</span>            <span class="o">|</span> <span class="n">root</span>             <span class="o">|</span>
+<span class="o">|</span> <span class="n">iz25mfbe902z</span>   <span class="o">|</span> <span class="n">root</span>             <span class="o">|</span>
+<span class="o">|</span> <span class="n">localhost</span>      <span class="o">|</span> <span class="n">debian</span><span class="o">-</span><span class="n">sys</span><span class="o">-</span><span class="n">maint</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">localhost</span>      <span class="o">|</span> <span class="n">root</span>             <span class="o">|</span>
+<span class="o">+----------------+------------------+</span>
+<span class="mi">9</span> <span class="n">rows</span> <span class="n">in</span> <span class="n">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+
+
+<h3 id="_3">数据库自动备份脚本</h3>
+<div class="hlcode"><pre><span class="c">#!/bin/sh</span>
+<span class="c"># Name:bakmysql.sh</span>
+<span class="c"># This is a ShellScript For Auto DB Backup and Delete old Backup</span>
+<span class="c">#</span>
+<span class="nv">backupdir</span><span class="o">=</span>/home/sqlbak
+<span class="nv">mysql_bin_dir</span><span class="o">=</span>/usr/bin
+<span class="nb">time</span><span class="o">=</span><span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>
+<span class="nv">dbname1</span><span class="o">=</span>
+<span class="nv">dbname2</span><span class="o">=</span>
+<span class="nv">username</span><span class="o">=</span>
+<span class="nv">passwd</span><span class="o">=</span>
+<span class="nv">host</span><span class="o">=</span>
+
+<span class="nv">$mysql_bin_dir</span>/mysqldump -u <span class="nv">$username</span> -p<span class="nv">$passwd</span> -h <span class="nv">$host</span> <span class="nv">$dbname1</span> | gzip &gt; <span class="nv">$backupdir</span>/bak-<span class="nv">$dbname1</span>-<span class="nv">$time</span>.sql.gz
+<span class="nv">$mysql_bin_dir</span>/mysqldump -u <span class="nv">$username</span> -p<span class="nv">$passwd</span> -h <span class="nv">$host</span> <span class="nv">$dbname2</span> | gzip &gt; <span class="nv">$backupdir</span>/bak-<span class="nv">$dbname2</span>-<span class="nv">$time</span>.sql.gz
+
+find <span class="nv">$backupdir</span> -name <span class="s2">&quot;*.gz&quot;</span> -type f -mtime +7 -exec rm <span class="o">{}</span> <span class="se">\;</span> &gt; /dev/null 2&gt;&amp;1
+</pre></div>
+
+
+<p><a href="https://gist.github.com/ferstar/387b20c9468979ddd5f6">https://gist.github.com/ferstar/387b20c9468979ddd5f6</a></p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://ferstar.org/" target="_blank">ferstar</a>.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+               <p>Last Update 2016-01-26</p>
+        </div>
+    </body>
+</html>
