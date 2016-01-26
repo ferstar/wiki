@@ -12,6 +12,8 @@ PostgreSQL 是自由的对象-关系型数据库服务器（数据库管理系�
 
 PostgreSQL 不寻常的名字导致一些读者停下来尝试拼读它，特别是那些把 SQL 拼读为"sequel"的人。PostgreSQL 开发者把它拼读为"post-gress-Q-L"。它也经常被简略念为"postgres"。
 
+> 以上介绍转自 [https://zh.wikipedia.org/wiki/PostgreSQL](https://zh.wikipedia.org/wiki/PostgreSQL) 
+
 ## Create Test DB
 
 ```shell
