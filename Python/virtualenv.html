@@ -39,12 +39,61 @@
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <p>TODO</p>
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">关于</a></li>
+<li><a href="#_2">初阶</a><ul>
+<li><a href="#_3">安装</a></li>
+<li><a href="#_4">使用</a></li>
+<li><a href="#python">指定 python 版本</a></li>
+<li><a href="#_5">部署</a></li>
+</ul>
+</li>
+<li><a href="#read-more">Read More</a></li>
+</ul>
+</div>
+<h2 id="_1">关于</h2>
+<p>virtualenv 创建一个拥有自己安装目录的环境, 这个环境不与其他虚拟环境共享库, 能够方便的管理 python 版本和管理 python 库</p>
+<h2 id="_2">初阶</h2>
+<h3 id="_3">安装</h3>
+<p><code>sudo pip3 install https://github.com/pypa/virtualenv/tarball/develop</code></p>
+<h3 id="_4">使用</h3>
+<div class="hlcode"><pre><span class="err">➜</span>  <span class="o">~</span>  <span class="n">mkdir</span> <span class="n">flask</span>
+<span class="err">➜</span>  <span class="o">~</span>  <span class="n">virtualenv</span> <span class="n">flask</span> 
+<span class="n">Using</span> <span class="n">base</span> <span class="n">prefix</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="err">&#39;</span>
+<span class="n">New</span> <span class="n">python</span> <span class="n">executable</span> <span class="n">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ferstar</span><span class="o">/</span><span class="n">flask</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python3</span>
+<span class="n">Also</span> <span class="n">creating</span> <span class="n">executable</span> <span class="n">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ferstar</span><span class="o">/</span><span class="n">flask</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python</span>
+<span class="n">Installing</span> <span class="n">setuptools</span><span class="p">,</span> <span class="n">pip</span><span class="p">,</span> <span class="n">wheel</span><span class="p">...</span><span class="n">done</span><span class="p">.</span>
+<span class="err">➜</span>  <span class="o">~</span>  <span class="n">cd</span> <span class="n">flask</span> 
+<span class="err">➜</span>  <span class="n">flask</span>  <span class="n">ls</span>
+<span class="n">bin</span>  <span class="n">include</span>  <span class="n">lib</span>
+<span class="err">➜</span>  <span class="n">flask</span>  <span class="n">source</span> <span class="n">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="p">(</span><span class="n">flask</span><span class="p">)</span> <span class="err">➜</span>  <span class="n">flask</span>  <span class="n">deactivate</span>
+<span class="err">➜</span>  <span class="n">flask</span>
+</pre></div>
+
+
+<h3 id="python">指定 python 版本</h3>
+<p>可以使用 -p PYTHONPATH 选项在创建虚拟环境的时候指定 python 版本。</p>
+<p><code>virtualenv -p /usr/local/bin/python3.4 ENV</code></p>
+<h3 id="_5">部署</h3>
+<p>某些特殊需求下,可能没有网络，我们可能想直接打包一个ENV, 可以解压后直接使用, 这时候可以使用 virtualenv -relocatable 指令将 ENV 修改为可更改位置的 ENV</p>
+<div class="hlcode"><pre><span class="p">(</span><span class="n">flask</span><span class="p">)</span> <span class="err">➜</span>  <span class="n">flask</span>  <span class="n">virtualenv</span> <span class="o">--</span><span class="n">relocatable</span> <span class="p">.</span><span class="o">/</span>
+<span class="n">Making</span> <span class="n">script</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ferstar</span><span class="o">/</span><span class="n">flask</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">easy_install</span> <span class="n">relative</span>
+<span class="n">Making</span> <span class="n">script</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ferstar</span><span class="o">/</span><span class="n">flask</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pip3</span> <span class="n">relative</span>
+<span class="n">Making</span> <span class="n">script</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ferstar</span><span class="o">/</span><span class="n">flask</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">config</span> <span class="n">relative</span>
+<span class="n">Making</span> <span class="n">script</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ferstar</span><span class="o">/</span><span class="n">flask</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">easy_install</span><span class="o">-</span><span class="mf">3.4</span> <span class="n">relative</span>
+<span class="n">Making</span> <span class="n">script</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ferstar</span><span class="o">/</span><span class="n">flask</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pip3</span><span class="mf">.4</span> <span class="n">relative</span>
+<span class="n">Making</span> <span class="n">script</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ferstar</span><span class="o">/</span><span class="n">flask</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pip</span> <span class="n">relative</span>
+<span class="n">Making</span> <span class="n">script</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ferstar</span><span class="o">/</span><span class="n">flask</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">wheel</span> <span class="n">relative</span>
+</pre></div>
+
+
 <h2 id="read-more">Read More</h2>
 <ul>
 <li><a href="http://mengzhuo.org/blog/virtualenv%E5%92%8Cpip%E5%B0%8F%E6%8E%A2.html">Virtualenv和pip小探</a></li>
 <li><a href="https://virtualenv-chinese-docs.readthedocs.org/en/latest/">virtualenv doc</a></li>
-<li><a href="http://simononsoftware.com/virtualenv-tutorial/">Virtualenv Tutorial</a>(</li>
+<li><a href="http://simononsoftware.com/virtualenv-tutorial/">Virtualenv Tutorial</a></li>
+<li><a href="https://virtualenv.pypa.io/en/latest/installation.html">Virtualenv Docs</a></li>
 </ul>
     </div>
 
@@ -55,7 +104,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-               <p>Last Update 2016-01-26</p>
+               <p>Last Update 2016-01-27</p>
         </div>
     </body>
 </html>
