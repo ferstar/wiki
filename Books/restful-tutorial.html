@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>RESTful Tutorial - My Personal Wiki Site</title>
+        <meta name="keywords" content="wiki, linux, python"/>
+        <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, Linux, Ops-Dev etc."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#Books">Books</a> » RESTful Tutorial
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">定义</a><ul>
+<li><a href="#web">应用于 Web 服务</a></li>
+</ul>
+</li>
+<li><a href="#_2">要点</a><ul>
+<li><a href="#1">1. 协议</a></li>
+<li><a href="#2">2. 域名</a></li>
+<li><a href="#3">3. 版本</a></li>
+<li><a href="#4">4. 路径</a></li>
+<li><a href="#5-http">5. HTTP 动词</a></li>
+<li><a href="#6">6. 过滤信息</a></li>
+<li><a href="#7">7. 状态码</a></li>
+<li><a href="#8">8. 错误处理</a></li>
+<li><a href="#9">9. 返回结果</a></li>
+<li><a href="#10-hypermedia-api">10. Hypermedia API</a></li>
+<li><a href="#11">11. 其他</a></li>
+</ul>
+</li>
+<li><a href="#_3">优点</a></li>
+<li><a href="#_4">参考</a></li>
+</ul>
+</div>
+<h2 id="_1">定义</h2>
+<p>表征性状态传输（英文：Representational State Transfer，简称REST）是Roy Fielding博士于2000年在他的博士论文中提出来的一种软件架构风格。</p>
+<h3 id="web">应用于 Web 服务</h3>
+<p>符合 REST 设计风格的 Web API 称为 RESTful API。它从以下三个方面资源进行定义：</p>
+<ul>
+<li>
+<p>直观简短的资源地址：URI，比如：http://example.com/resources/。</p>
+</li>
+<li>
+<p>传输的资源：Web服务接受与返回的互联网媒体类型，比如：JSON，XML，YAML等。</p>
+</li>
+<li>
+<p>对资源的操作：Web服务在该资源上所支持的一系列请求方法（比如：POST，GET，PUT或DELETE）。</p>
+</li>
+</ul>
+<p>下表列出了在实现RESTful API时HTTP请求方法的典型用途。</p>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>GET</th>
+<th>PUT</th>
+<th>POST</th>
+<th>DELETE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一组资源的URI，比如http://example.com/resources/</td>
+<td>列出URI，以及该资源组中每个资源的详细信息（后者可选）。</td>
+<td>使用给定的一组资源替换当前整组资源。</td>
+<td>在本组资源中创建/追加一个新的资源。该操作往往返回新资源的URL。</td>
+<td>删除整组资源。</td>
+</tr>
+<tr>
+<td>单个资源的URI，比如http://example.com/resources/142</td>
+<td>获取指定的资源的详细信息，格式可以自选一个合适的网络媒体类型（比如：XML、JSON等）</td>
+<td>替换/创建指定的资源。并将其追加到相应的资源组中。</td>
+<td>把指定的资源当做一个资源组，并在其下创建/追加一个新的元素，使其隶属于当前资源。</td>
+<td>删除指定的元素。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>PUT和DELETE方法是幂等方法。GET方法是安全方法（不会对服务器端有修改，因此当然也是幂等的）。</p>
+<p>不像基于SOAP的Web服务，RESTful Web服务并没有“正式”的标准。这是因为REST是一种架构，而SOAP只是一个协议。虽然REST不是一个标准，但在实现RESTful Web服务时可以使用其他各种标准（比如HTTP，URL，XML，PNG等）。</p>
+</blockquote>
+<h2 id="_2">要点</h2>
+<blockquote>
+<p>REST 是一种设计风格而不是<strong>标准</strong>。通常使用现有协议规定的通用方法完成资源的操作。</p>
+</blockquote>
+<ul>
+<li>
+<p>资源由 URI 来指定。</p>
+</li>
+<li>
+<p>资源操作包括增、删、改和查，分别对应 HTTP 提供的 POST、DELETE、PUT、GET 方法。</p>
+</li>
+<li>
+<p>通过操作资源的表现形式来操作资源。</p>
+</li>
+<li>
+<p>资源的表现形式，通常是 json 了吧，具体信息获取可以通过 curl 命令取得。</p>
+</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># curl https:</span><span class="c1">//api.github.com -I</span>
+<span class="cp"># 协议 / 返回码</span>
+<span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="nl">Server:</span> <span class="n">GitHub</span><span class="p">.</span><span class="n">com</span>
+<span class="nl">Date:</span> <span class="n">Thu</span><span class="p">,</span> <span class="mi">28</span> <span class="n">Jan</span> <span class="mi">2016</span> <span class="mo">03</span><span class="o">:</span><span class="mi">37</span><span class="o">:</span><span class="mi">37</span> <span class="n">GMT</span>
+<span class="cp"># 资源表现形式 / 编码 == json / utf8</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="o">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span><span class="p">;</span> <span class="n">charset</span><span class="o">=</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Length</span><span class="o">:</span> <span class="mi">2064</span>
+<span class="cp"># 状态码</span>
+<span class="nl">Status:</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="cp"># API 限制</span>
+<span class="n">X</span><span class="o">-</span><span class="n">RateLimit</span><span class="o">-</span><span class="n">Limit</span><span class="o">:</span> <span class="mi">60</span>
+<span class="n">X</span><span class="o">-</span><span class="n">RateLimit</span><span class="o">-</span><span class="n">Remaining</span><span class="o">:</span> <span class="mi">58</span>
+<span class="n">X</span><span class="o">-</span><span class="n">RateLimit</span><span class="o">-</span><span class="n">Reset</span><span class="o">:</span> <span class="mi">1453953247</span>
+<span class="n">Cache</span><span class="o">-</span><span class="n">Control</span><span class="o">:</span> <span class="n">public</span><span class="p">,</span> <span class="n">max</span><span class="o">-</span><span class="n">age</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">s</span><span class="o">-</span><span class="n">maxage</span><span class="o">=</span><span class="mi">60</span>
+<span class="nl">ETag:</span> <span class="s">&quot;d251d84fc3f78921c16c7f9c99d74eae&quot;</span>
+<span class="nl">Vary:</span> <span class="n">Accept</span>
+<span class="cp"># API 版本</span>
+<span class="n">X</span><span class="o">-</span><span class="n">GitHub</span><span class="o">-</span><span class="n">Media</span><span class="o">-</span><span class="n">Type</span><span class="o">:</span> <span class="n">github</span><span class="p">.</span><span class="n">v3</span>
+<span class="n">Access</span><span class="o">-</span><span class="n">Control</span><span class="o">-</span><span class="n">Allow</span><span class="o">-</span><span class="n">Credentials</span><span class="o">:</span> <span class="nb">true</span>
+<span class="n">Access</span><span class="o">-</span><span class="n">Control</span><span class="o">-</span><span class="n">Expose</span><span class="o">-</span><span class="n">Headers</span><span class="o">:</span> <span class="n">ETag</span><span class="p">,</span> <span class="n">Link</span><span class="p">,</span> <span class="n">X</span><span class="o">-</span><span class="n">GitHub</span><span class="o">-</span><span class="n">OTP</span><span class="p">,</span> <span class="n">X</span><span class="o">-</span><span class="n">RateLimit</span><span class="o">-</span><span class="n">Limit</span><span class="p">,</span> <span class="n">X</span><span class="o">-</span><span class="n">RateLimit</span><span class="o">-</span><span class="n">Remaining</span><span class="p">,</span> <span class="n">X</span><span class="o">-</span><span class="n">RateLimit</span><span class="o">-</span><span class="n">Reset</span><span class="p">,</span> <span class="n">X</span><span class="o">-</span><span class="n">OAuth</span><span class="o">-</span><span class="n">Scopes</span><span class="p">,</span> <span class="n">X</span><span class="o">-</span><span class="n">Accepted</span><span class="o">-</span><span class="n">OAuth</span><span class="o">-</span><span class="n">Scopes</span><span class="p">,</span> <span class="n">X</span><span class="o">-</span><span class="n">Poll</span><span class="o">-</span><span class="n">Interval</span>
+<span class="n">Access</span><span class="o">-</span><span class="n">Control</span><span class="o">-</span><span class="n">Allow</span><span class="o">-</span><span class="n">Origin</span><span class="o">:</span> <span class="o">*</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Security</span><span class="o">-</span><span class="n">Policy</span><span class="o">:</span> <span class="k">default</span><span class="o">-</span><span class="n">src</span> <span class="err">&#39;</span><span class="n">none</span><span class="err">&#39;</span>
+<span class="n">Strict</span><span class="o">-</span><span class="n">Transport</span><span class="o">-</span><span class="n">Security</span><span class="o">:</span> <span class="n">max</span><span class="o">-</span><span class="n">age</span><span class="o">=</span><span class="mi">31536000</span><span class="p">;</span> <span class="n">includeSubdomains</span><span class="p">;</span> <span class="n">preload</span>
+<span class="n">X</span><span class="o">-</span><span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="o">-</span><span class="n">Options</span><span class="o">:</span> <span class="n">nosniff</span>
+<span class="n">X</span><span class="o">-</span><span class="n">Frame</span><span class="o">-</span><span class="n">Options</span><span class="o">:</span> <span class="n">deny</span>
+<span class="n">X</span><span class="o">-</span><span class="n">XSS</span><span class="o">-</span><span class="n">Protection</span><span class="o">:</span> <span class="mi">1</span><span class="p">;</span> <span class="n">mode</span><span class="o">=</span><span class="n">block</span>
+<span class="nl">Vary:</span> <span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span>
+<span class="n">X</span><span class="o">-</span><span class="n">Served</span><span class="o">-</span><span class="n">By</span><span class="o">:</span> <span class="n">e183f7c661b1bbc2c987b3c4dc7b04e0</span>
+<span class="n">X</span><span class="o">-</span><span class="n">GitHub</span><span class="o">-</span><span class="n">Request</span><span class="o">-</span><span class="n">Id</span><span class="o">:</span> <span class="mo">0154</span><span class="mi">9811</span><span class="o">:</span><span class="mi">1</span><span class="n">C1EB</span><span class="o">:</span><span class="n">A707303</span><span class="o">:</span><span class="mi">56</span><span class="n">A98D00</span>
+</pre></div>
+
+
+<h3 id="1">1. 协议</h3>
+<p>API与用户的通信协议，总是使用HTTPs协议。</p>
+<h3 id="2">2. 域名</h3>
+<p>应将 API 部署在专用域名或事先规划好的主域名 URL 之下</p>
+<ul>
+<li>
+<p><code>https://api.helloworl.com</code></p>
+</li>
+<li>
+<p><code>https://helloworld.com/api/</code></p>
+</li>
+</ul>
+<h3 id="3">3. 版本</h3>
+<p>直观的做法是将 API 的版本号放入 URL 中，另一种做法是将版本号写入 HTTP 头信息中。</p>
+<p><code>https://api.helloworld.com/v1/</code></p>
+<h3 id="4">4. 路径</h3>
+<p>在 RESTful 架构中，每个网址代表一种资源（resource），所以网址中<strong>不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应</strong>。一般来说，数据库中的表都是同种记录的"集合"（collection），所以<strong>API中的名词也应该使用复数</strong>。</p>
+<p>举例来说，有一个API提供动物园（zoo）的信息，还包括各种动物和雇员的信息，则它的路径应该设计成下面这样。</p>
+<div class="hlcode"><pre><span class="nl">https:</span><span class="c1">//api.example.com/v1/zoos</span>
+<span class="nl">https:</span><span class="c1">//api.example.com/v1/animals</span>
+<span class="nl">https:</span><span class="c1">//api.example.com/v1/employees</span>
+</pre></div>
+
+
+<h3 id="5-http">5. HTTP 动词</h3>
+<p>常用的 HTTP 动词有四个</p>
+<div class="hlcode"><pre><span class="n">GET</span><span class="err">（</span><span class="n">SELECT</span><span class="err">）：从服务器取出资源（一项或多项）。</span>
+<span class="n">POST</span><span class="err">（</span><span class="n">CREATE</span><span class="err">）：在服务器新建一个资源。</span>
+<span class="n">PUT</span><span class="err">（</span><span class="n">UPDATE</span><span class="err">）：在服务器更新资源（客户端提供改变后的完整资源）。</span>
+<span class="n">PATCH</span><span class="err">（</span><span class="n">UPDATE</span><span class="err">）：在服务器更新资源（客户端提供改变的属性）。</span>
+<span class="n">DELETE</span><span class="err">（</span><span class="n">DELETE</span><span class="err">）：从服务器删除资源。</span>
+</pre></div>
+
+
+<h3 id="6">6. 过滤信息</h3>
+<h3 id="7">7. 状态码</h3>
+<h3 id="8">8. 错误处理</h3>
+<h3 id="9">9. 返回结果</h3>
+<h3 id="10-hypermedia-api">10. Hypermedia API</h3>
+<h3 id="11">11. 其他</h3>
+<ol>
+<li>
+<p>身份验证</p>
+</li>
+<li>
+<p>服务器返回格式</p>
+</li>
+<li>
+<p>HTTPs协议加密</p>
+</li>
+</ol>
+<h2 id="_3">优点</h2>
+<ul>
+<li>
+<p>可更高效利用缓存来提高响应速度</p>
+</li>
+<li>
+<p>通讯本身的无状态性可以让不同的服务器的处理一系列请求中的不同请求，提高服务器的扩展性</p>
+</li>
+<li>
+<p>浏览器即可作为客户端，简化软件需求</p>
+</li>
+<li>
+<p>相对于其他叠加在HTTP协议之上的机制，REST的软件依赖性更小</p>
+</li>
+<li>
+<p>不需要额外的资源发现机制</p>
+</li>
+<li>
+<p>在软件技术演进中的长期的兼容性更好</p>
+</li>
+</ul>
+<h2 id="_4">参考</h2>
+<p><a href="http://www.w3school.com.cn/tags/html_ref_httpmessages.asp">HTTP 状态消息</a> </p>
+<p><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">RESTful API 设计指南</a> </p>
+<p><a href="http://codeplanet.io/principles-good-restful-api-design/">Principles of good RESTful API Design</a> </p>
+<p><a href="http://www.restapitutorial.com/">Learn REST: A RESTful Tutorial</a> </p>
+<p><a href="https://bourgeois.me/rest/">Some REST best practices</a> </p>
+<p><a href="https://zh.wikipedia.org/wiki/REST">https://zh.wikipedia.org/wiki/REST</a> </p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://ferstar.org/" target="_blank">ferstar</a>.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+               <p>Last Update 2016-01-28</p>
+        </div>
+    </body>
+</html>
