@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>GeoJSON - My Personal Wiki Site</title>
+        <meta name="keywords" content="wiki, linux, python"/>
+        <meta name="description" content="ferstar's personal wiki, powered by vim and markdown. Focus on Python, Linux, Ops-Dev etc."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#Others">Others</a> » GeoJSON
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#1">1. 介绍</a><ul>
+<li><a href="#11">1.1 例子</a></li>
+</ul>
+</li>
+<li><a href="#2-geojson">2. GeoJSON 对象</a><ul>
+<li><a href="#21">2.1 几何对象</a><ul>
+<li><a href="#211-positions">2.1.1 位置 Positions</a></li>
+<li><a href="#212-point">2.1.2 点 Point</a></li>
+<li><a href="#213-multipoint">2.1.3 多点 MultiPoint</a></li>
+<li><a href="#214-linestring">2.1.4 线 LineString</a></li>
+<li><a href="#215-multilinestring">2.1.5 多线 MultiLineString</a></li>
+<li><a href="#216-polygon">2.1.6 多边形 Polygon</a></li>
+<li><a href="#217-multipolygon">2.1.7 多个多边形 MultiPolygon</a></li>
+<li><a href="#218-geometry-collection">2.1.8 几何集合 Geometry Collection</a></li>
+</ul>
+</li>
+<li><a href="#22-feature-objects-rz">2.2 Feature Objects 这咋译？特性对象？囧rz。</a></li>
+</ul>
+</li>
+<li><a href="#_1">举例</a><ul>
+<li><a href="#point">Point 单点</a></li>
+<li><a href="#linestring">LineString 单线</a></li>
+<li><a href="#polygon">Polygon 多边形</a></li>
+<li><a href="#multipoint">MultiPoint 多点</a></li>
+<li><a href="#multilinestring">MultiLineString 多线</a></li>
+<li><a href="#multipolygon">MultiPolygon 多个多边形</a></li>
+<li><a href="#geometrycollection">GeometryCollection 几何集合</a></li>
+</ul>
+</li>
+<li><a href="#_2">参考</a></li>
+</ul>
+</div>
+<h2 id="1">1. 介绍</h2>
+<p>GeoJSON 是一种表示多种地图数据结构的格式。一个 GeoJSON 对象可以表示一个几何图形、一个特性或者多个特性的集合。GeoJSON 支持如下几种几何类型：单点、单线、多边形、多点、多线、多个多边形和几何图形集合。GeoJSON 特征是包含一个几何对象和附加的类型还有一个表示一系列特性的特性集合（嗯，这里翻的好烂）。</p>
+<p>一个完整的 GeoJSON 数据结构总是一个 JSON 格式的对象。在 GeoJSON 中，一个对象由一系列 key/value 组合而成——通常也成为成员。对于每个成员来说，key 永远是一个字符串，成员 values 既可以是字符串也可以是数字，对象，数组或者布尔值，如 True，False 和 Null。一个数组由上面提到过的各元素值组成。</p>
+<h3 id="11">1.1 例子</h3>
+<p>一个 GeoJSON 特性集合：</p>
+<div class="hlcode"><pre><span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;FeatureCollection&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;features&quot;</span><span class="o">:</span> <span class="cp">[</span>
+      <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="err">[</span><span class="mf">102.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="cp">]</span><span class="p">}</span><span class="o">,</span>
+        <span class="s2">&quot;properties&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;prop0&quot;</span><span class="o">:</span> <span class="s2">&quot;value0&quot;</span><span class="p">}</span>
+        <span class="err">}</span><span class="o">,</span>
+      <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;Feature&quot;</span><span class="o">,</span>
+        <span class="s2">&quot;geometry&quot;</span><span class="o">:</span> <span class="err">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;LineString&quot;</span><span class="o">,</span>
+          <span class="s2">&quot;coordinates&quot;</span><span class="o">:</span> <span class="cp">[</span>
+            <span class="err">[</span><span class="mf">102.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">103.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">104.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">105.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span>
+            <span class="p">]</span>
+          <span class="p">}</span><span class="o">,</span>
+        <span class="s2">&quot;properties&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;prop0&quot;</span><span class="o">:</span> <span class="s2">&quot;value0&quot;</span><span class="o">,</span>
+          <span class="s2">&quot;prop1&quot;</span><span class="o">:</span> <span class="m">0</span><span class="o">.</span><span class="m">0</span>
+          <span class="p">}</span>
+        <span class="err">}</span><span class="o">,</span>
+      <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;Feature&quot;</span><span class="o">,</span>
+         <span class="s2">&quot;geometry&quot;</span><span class="o">:</span> <span class="err">{</span>
+           <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="o">,</span>
+           <span class="s2">&quot;coordinates&quot;</span><span class="o">:</span> <span class="cp">[</span>
+             <span class="err">[</span> <span class="err">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span><span class="o">,</span>
+               <span class="cp">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span> <span class="p">]</span>
+             <span class="p">]</span>
+         <span class="p">}</span><span class="o">,</span>
+         <span class="s2">&quot;properties&quot;</span><span class="o">:</span> <span class="p">{</span>
+           <span class="s2">&quot;prop0&quot;</span><span class="o">:</span> <span class="s2">&quot;value0&quot;</span><span class="o">,</span>
+           <span class="s2">&quot;prop1&quot;</span><span class="o">:</span> <span class="err">{</span><span class="s2">&quot;this&quot;</span><span class="o">:</span> <span class="s2">&quot;that&quot;</span><span class="p">}</span>
+           <span class="err">}</span>
+         <span class="err">}</span>
+       <span class="o">]</span>
+     <span class="err">}</span>
+</pre></div>
+
+
+<h2 id="2-geojson">2. GeoJSON 对象</h2>
+<p>GeoJSON 对象通常由一个对象组成。这个对象（如下所示）表示一个几何图形，特性或者是一个特性集合。</p>
+<ul>
+<li>
+<p>GeoJSON 对象可以拥有任意数量的成员（key/value）</p>
+</li>
+<li>
+<p>GeoJSON 对象必须有一个名为<code>"type"</code>的成员。这个成员的值是一个字符串，决定 GeoJSON 对象的类型。</p>
+</li>
+<li>
+<p><code>"type"</code>成员的键值必须是以下任意一个："Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "GeometryCollection", "Feature", or "FeatureCollection"。区分大小写。</p>
+</li>
+<li>
+<p>GeoJSON 可以包含一个可选的<code>"crs"</code>成员，其每个值都必须是一个相对系统坐标值</p>
+</li>
+<li>
+<p>GeoJSON 对象可以包含一个<code>"bbox"</code>成员，其值必须是一个受约束的边界数组。</p>
+</li>
+</ul>
+<h3 id="21">2.1 几何对象</h3>
+<p>当几何对象的成员类型值是如下字符串时："Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", or "GeometryCollection" 该几何对象就是一个 GeoJSON 对象。</p>
+<p>一个 GeoJSON 对象中除了几何集合以外都必须要有一个名为 "coordinates" 的成员。其值通常是一个数组。数组结构由几何模型的类型决定。如点、线、多边形等。</p>
+<h4 id="211-positions">2.1.1 位置 Positions</h4>
+<p>位置信息是一个基本的几何结构。一个几何对象的 coordinates 成员由位置可以由一个位置，如单点，一个位置数组，如线，多点几何模型，一个位置数组的数组，如多边形，多线，或者超长的位置数组，比如多个多边形。艾玛，译吐了。</p>
+<p>位置信息由一个包含数字的数组表示。这个数组至少须要包含两个甚至更多的元素。元素顺序必须服从笛卡尔直角坐标系顺序，即 x，y，z。地理信息表示顺序则是 经度，纬度，海拔。这里支持任意数量的元素，但超出本文讨论范围。</p>
+<h4 id="212-point">2.1.2 点 Point</h4>
+<p>对于 "point" 类型，坐标必须只能是一个位置</p>
+<h4 id="213-multipoint">2.1.3 多点 MultiPoint</h4>
+<p>对于多点，坐标成员必须是一个多位置的数组</p>
+<h4 id="214-linestring">2.1.4 线 LineString</h4>
+<p>对于线型，坐标必须是两个或以上的位置集合数组</p>
+<p>闭环线须要四或者更多位置。首尾位置坐标相等，表示这是一条闭合的环线。虽然闭环线并不是一个清晰的 GeoJSON 几何对象类型，它更符合多边形几何模型的定义。</p>
+<h4 id="215-multilinestring">2.1.5 多线 MultiLineString</h4>
+<p>很好理解，多条线当然须要一个包含多条单线的坐标系列组合。</p>
+<h4 id="216-polygon">2.1.6 多边形 Polygon</h4>
+<p>对于多边形类型，坐标成员必须是一堆闭环坐标数组。 For Polygons with multiple rings, the first must be the exterior ring and any others must be interior rings or holes.</p>
+<h4 id="217-multipolygon">2.1.7 多个多边形 MultiPolygon</h4>
+<p>顾名思义，这里肯定是要包含一堆多边形的数组集合。</p>
+<h4 id="218-geometry-collection">2.1.8 几何集合 Geometry Collection</h4>
+<p>此类型的 GeoJSON 对象包含多个几何对象的集合</p>
+<p>几何集合必须有一个名为 "geometries" 的成员。其值应该是一个数组。这个数组中的任一元素均为一个 GeoJSON 几何对象。</p>
+<h3 id="22-feature-objects-rz">2.2 Feature Objects 这咋译？特性对象？囧rz。</h3>
+<p>A GeoJSON object with the type "Feature" is a feature object.</p>
+<ul>
+<li>
+<p>A feature object must have a member with the name "geometry". The value of the geometry member is a geometry object as defined above or a JSON null value.</p>
+</li>
+<li>
+<p>A feature object must have a member with the name "properties". The value of the properties member is an object (any JSON object or a JSON null value).</p>
+</li>
+<li>
+<p>If a feature has a commonly used identifier, that identifier should be included as a member of the feature object with the name "id".</p>
+</li>
+</ul>
+<h2 id="_1">举例</h2>
+<p>以下例子均是一个完整的 GeoJSON 对象。注意结尾的留白在 JSON 中并不会被解析，空白的存在是为了显示更和谐，易读。实际上留白并不是必须的。</p>
+<h3 id="point">Point 单点</h3>
+<p><code>{ "type": "Point", "coordinates": [100.0, 0.0] }</code></p>
+<h3 id="linestring">LineString 单线</h3>
+<div class="hlcode"><pre><span class="p">{</span> <span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;LineString&quot;</span><span class="p">,</span>
+    <span class="s">&quot;coordinates&quot;</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span> <span class="p">]</span>
+    <span class="p">}</span>
+</pre></div>
+
+
+<h3 id="polygon">Polygon 多边形</h3>
+<p>多边形分无孔洞和有孔洞两种情况，数组第一行元素代表多边形外轮廓，其余行元素均代表内轮廓，即孔洞。</p>
+<ul>
+<li>无孔洞</li>
+</ul>
+<div class="hlcode"><pre><span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;coordinates&quot;</span><span class="o">:</span> <span class="cp">[</span>
+      <span class="err">[</span> <span class="err">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span> <span class="p">]</span>
+      <span class="p">]</span>
+   <span class="p">}</span>
+</pre></div>
+
+
+<ul>
+<li>有孔洞</li>
+</ul>
+<div class="hlcode"><pre><span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;coordinates&quot;</span><span class="o">:</span> <span class="cp">[</span>
+      <span class="err">[</span> <span class="err">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span> <span class="p">]</span><span class="o">,</span>
+      <span class="cp">[</span> <span class="err">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="cp">]</span> <span class="p">]</span>
+      <span class="p">]</span>
+   <span class="p">}</span>
+</pre></div>
+
+
+<h3 id="multipoint">MultiPoint 多点</h3>
+<div class="hlcode"><pre><span class="p">{</span> <span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;MultiPoint&quot;</span><span class="p">,</span>
+    <span class="s">&quot;coordinates&quot;</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span> <span class="p">]</span>
+    <span class="p">}</span>
+</pre></div>
+
+
+<h3 id="multilinestring">MultiLineString 多线</h3>
+<div class="hlcode"><pre><span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;MultiLineString&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;coordinates&quot;</span><span class="o">:</span> <span class="cp">[</span>
+        <span class="err">[</span> <span class="err">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span> <span class="p">]</span><span class="o">,</span>
+        <span class="cp">[</span> <span class="err">[</span><span class="mf">102.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">103.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="cp">]</span> <span class="p">]</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+</pre></div>
+
+
+<h3 id="multipolygon">MultiPolygon 多个多边形</h3>
+<div class="hlcode"><pre><span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;MultiPolygon&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;coordinates&quot;</span><span class="o">:</span> <span class="cp">[</span>
+      <span class="err">[[[</span><span class="mf">102.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">103.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">103.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">102.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">102.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="cp">]</span><span class="p">]]</span><span class="o">,</span>
+      <span class="cp">[</span><span class="err">[[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="p">]</span><span class="o">,</span>
+       <span class="cp">[</span><span class="err">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="cp">]</span><span class="p">]]</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+</pre></div>
+
+
+<h3 id="geometrycollection">GeometryCollection 几何集合</h3>
+<div class="hlcode"><pre><span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;GeometryCollection&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;geometries&quot;</span><span class="o">:</span> <span class="cp">[</span>
+      <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="err">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span>
+        <span class="p">}</span><span class="o">,</span>
+      <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;LineString&quot;</span><span class="o">,</span>
+        <span class="s2">&quot;coordinates&quot;</span><span class="o">:</span> <span class="cp">[</span> <span class="err">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="cp">]</span><span class="o">,</span> <span class="cp">[</span><span class="mf">102.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="cp">]</span> <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="o">]</span>
+  <span class="err">}</span>
+</pre></div>
+
+
+<h2 id="_2">参考</h2>
+<p><a href="http://geojson.org/geojson-spec.html">http://geojson.org/geojson-spec.html</a> </p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://ferstar.org/" target="_blank">ferstar</a>.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+               <p>Last Update 2016-01-30</p>
+        </div>
+    </body>
+</html>
