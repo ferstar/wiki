@@ -195,10 +195,70 @@
 
 
 <h3 id="6">6. 过滤信息</h3>
+<p>如果记录数量很多，服务器不可能都将他们返回给用户。所以 API 应该提供参数，过滤返回结果。</p>
+<p>以下是一些常见的参数。</p>
+<div class="hlcode"><pre><span class="o">?</span><span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="err">：指定返回记录的数量</span>
+<span class="o">?</span><span class="n">offset</span><span class="o">=</span><span class="mi">10</span><span class="err">：指定返回记录的开始位置。</span>
+<span class="o">?</span><span class="n">page</span><span class="o">=</span><span class="mi">2</span><span class="o">&amp;</span><span class="n">per_page</span><span class="o">=</span><span class="mi">100</span><span class="err">：指定第几页，以及每页的记录数。</span>
+<span class="o">?</span><span class="n">sortby</span><span class="o">=</span><span class="n">name</span><span class="o">&amp;</span><span class="n">order</span><span class="o">=</span><span class="n">asc</span><span class="err">：指定返回结果按照哪个属性排序，以及排序顺序。</span>
+<span class="o">?</span><span class="n">animal_type_id</span><span class="o">=</span><span class="mi">1</span><span class="err">：指定筛选条件</span>
+</pre></div>
+
+
+<p>参数的设计允许存在冗余，即允许 API 路径和 URL 参数偶尔有重复。比如，<code>GET /zoo/ID/animals</code> 与 <code>GET /animals?zoo_id=ID</code> 的含义是相同的。</p>
 <h3 id="7">7. 状态码</h3>
+<p>服务器向用户返回的状态码和提示信息，常见的有以下一些（方括号中是该状态码对应的HTTP动词）。</p>
+<p>见参考链接</p>
 <h3 id="8">8. 错误处理</h3>
+<p>如果状态码是 4xx，就应该向用户返回出错信息。一般来说，返回的信息中将 error 作为键名，出错信息作为键值即可</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="nl">error:</span> <span class="s">&quot;Invalid API key!&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
 <h3 id="9">9. 返回结果</h3>
+<p>针对不同操作，服务器向用户返回的结果应该符合以下规范。</p>
+<div class="hlcode"><pre><span class="n">GET</span> <span class="o">/</span><span class="n">collection</span><span class="err">：返回资源对象的列表（数组）</span>
+<span class="n">GET</span> <span class="o">/</span><span class="n">collection</span><span class="o">/</span><span class="n">resource</span><span class="err">：返回单个资源对象</span>
+<span class="n">POST</span> <span class="o">/</span><span class="n">collection</span><span class="err">：返回新生成的资源对象</span>
+<span class="n">PUT</span> <span class="o">/</span><span class="n">collection</span><span class="o">/</span><span class="n">resource</span><span class="err">：返回完整的资源对象</span>
+<span class="n">PATCH</span> <span class="o">/</span><span class="n">collection</span><span class="o">/</span><span class="n">resource</span><span class="err">：返回完整的资源对象</span>
+<span class="n">DELETE</span> <span class="o">/</span><span class="n">collection</span><span class="o">/</span><span class="n">resource</span><span class="err">：返回一个空文档</span>
+</pre></div>
+
+
 <h3 id="10-hypermedia-api">10. Hypermedia API</h3>
+<p>RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。
+比如，当用户向api.example.com的根目录发出请求，会得到这样一个文档。</p>
+<div class="hlcode"><pre><span class="p">{</span><span class="s">&quot;link&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s">&quot;rel&quot;</span><span class="o">:</span>   <span class="s">&quot;collection https://www.example.com/zoos&quot;</span><span class="p">,</span>
+  <span class="s">&quot;href&quot;</span><span class="o">:</span>  <span class="s">&quot;https://api.example.com/zoos&quot;</span><span class="p">,</span>
+  <span class="s">&quot;title&quot;</span><span class="o">:</span> <span class="s">&quot;List of zoos&quot;</span><span class="p">,</span>
+  <span class="s">&quot;type&quot;</span><span class="o">:</span>  <span class="s">&quot;application/vnd.yourformat+json&quot;</span>
+<span class="p">}}</span>
+</pre></div>
+
+
+<p>上面代码表示，文档中有一个link属性，用户读取这个属性就知道下一步该调用什么API了。rel表示这个API与当前网址的关系（collection关系，并给出该collection的网址），href表示API的路径，title表示API的标题，type表示返回类型。
+Hypermedia API的设计被称为HATEOAS。Github的API就是这种设计，访问api.github.com会得到一个所有可用API的网址列表。</p>
+<div class="hlcode"><pre><span class="p">{</span>
+  <span class="s">&quot;current_user_url&quot;</span><span class="o">:</span> <span class="s">&quot;https://api.github.com/user&quot;</span><span class="p">,</span>
+  <span class="s">&quot;authorizations_url&quot;</span><span class="o">:</span> <span class="s">&quot;https://api.github.com/authorizations&quot;</span><span class="p">,</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>从上面可以看到，如果想要获取用户的信息，就应该去访问api.github.com/user，然后就得到了下面结果。</p>
+<div class="hlcode"><pre><span class="p">{</span>
+  <span class="s">&quot;message&quot;</span><span class="o">:</span> <span class="s">&quot;Requires authentication&quot;</span><span class="p">,</span>
+  <span class="s">&quot;documentation_url&quot;</span><span class="o">:</span> <span class="s">&quot;https://developer.github.com/v3&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>上面代码表示，服务器给出了提示信息，以及文档的网址。</p>
 <h3 id="11">11. 其他</h3>
 <ol>
 <li>
