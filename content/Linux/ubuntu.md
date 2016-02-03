@@ -1,7 +1,7 @@
 ---
 title: "Ubuntu"
 date: 2016-01-06 10:16
-description: " --> 使用过程中的一些问题记录
+description: " --> 使用过程中的一些问题记录"
 ---
 
 [TOC]
