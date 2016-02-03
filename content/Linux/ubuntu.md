@@ -1,17 +1,26 @@
 ---
 title: "Ubuntu"
 date: 2016-01-06 10:16
+description: " --> 使用过程中的一些问题记录
 ---
 
 [TOC]
 
-![Ubuntu Logo](http://design.ubuntu.com/wp-content/uploads/ubuntu-orange.gif)
+## 服务自启动
 
-* [Ubuntu官网](http://www.ubuntu.com/server)
-* [Ubuntu Help](https://help.ubuntu.com/)
+`service --status-all`命令可以获取当前系统所有服务自动启动与否状态。`+`表示已设置为自启动。
 
+- 设置某服务为自启动服务的命令：
 
-## 其它 ##
+`update-rc.d SERVICENAME defaults`
+
+- 关闭某服务自启动的命令：
+
+`update-rc.d -f SERVICENAME remove`
+
+> 注：在 CentOS/RHEL 中，类似的命令行工具有`chkconfig`或`systemctl`；另外从 Ubuntu 15.04 开始，系统服务由 systemd 接管，对应的命令行工具是`systemctl`。
+
+## 其它
 
 ### remove vs purge ###
 
